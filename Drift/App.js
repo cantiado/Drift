@@ -87,6 +87,30 @@ export default function App() {
                 ),
               }}
             />
+            <Tab.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Icon
+                    name="user"
+                    size={size} color={color}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Signup"
+              component={SignupScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Icon
+                    name="user"
+                    size={size} color={color}
+                  />
+                ),
+              }}
+            />
           </Tab.Navigator>
         </NavigationContainer>
     </SafeAreaProvider>
