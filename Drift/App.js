@@ -18,8 +18,15 @@ const AuthStack = createStackNavigator();
 function AuthFlow() {
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen name="Login" component={LoginScreen} />
-      <AuthStack.Screen name="SignIn" component={SignupScreen} />
+      <AuthStack.Screen 
+        name="Login" 
+        component={LoginScreen} 
+      />
+
+      <AuthStack.Screen 
+        name="SignIn"
+        component={SignupScreen}
+      />
     </AuthStack.Navigator>
   );
 }

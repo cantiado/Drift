@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
+import { Text, TextInput, Button, Appbar } from 'react-native-paper';
 
 //this is for text, not entirely sure if needed
 const MyComponent = () => (
@@ -28,14 +28,27 @@ const MyComponent = () => (
 );
 
 
-const LoginScreen = () => {
+const LoginScreen = (/*{navigation}*/) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [text, setText] = React.useState("");
+  
+  const checkFormInput = () => {
+    if (!email.trim()) {
+      alert('Please enter a valid email');
+      return;
+    }
+    if (!password.trim()) {
+      alert('Please enter your password')
+      return
+    }
+  };
 
   return (
     <View>
-      <Text variant="displayMedium">Thirft with Drift</Text>
+      <Appbar.Header>
+        <Text variant="displayMedium">Thrift with Drift</Text>
+        
+      </Appbar.Header>
       <Text variant="titleLarge">Login:</Text>
 
       <TextInput
@@ -49,6 +62,26 @@ const LoginScreen = () => {
         value={password}
         onChangeText={password => setPassword(password)}
       />
+
+      <Button 
+        mode="elevated"
+        onPress={() => {
+          console.log('Pressed');
+          checkFormInput();
+          }
+        }>
+        Log in
+      </Button>
+
+      <Button 
+        onPress={() => {
+          console.log('sign up pressed');
+          //navigation.navigate('SignUpScreen');
+          }
+        }>
+        New user? Sign up here
+      </Button>
+
     </View>
   );
 };
