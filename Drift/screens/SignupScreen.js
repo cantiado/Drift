@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
 
-const SignupScreen = () => {
+const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
   const [lastName, setlastName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -53,7 +53,7 @@ const SignupScreen = () => {
         <Text variant="displayMedium">Thrift with Drift</Text>
         
       </Appbar.Header>
-      <Text variant="titleLarge">Sign up:</Text>
+      {/* <Text variant="titleLarge">Sign up:</Text> */}
 
       <TextInput
         label="First name"
@@ -104,7 +104,7 @@ const SignupScreen = () => {
       <Button 
         onPress={() => {
           console.log('return to login screen pressed');
-          //route to login screen
+          navigation.navigate("Login");
           }
         }>
         Already have an account? Log in here

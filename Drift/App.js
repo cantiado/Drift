@@ -2,6 +2,7 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import { Provider as PaperProvider } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { StackActions } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/FontAwesome";
 import theme from "./assets/theme";
 import HomeScreen from "./screens/HomeScreen";
@@ -13,23 +14,25 @@ import SignupScreen from "./screens/SignupScreen";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const AuthStack = createStackNavigator();
+// const AuthStack = createStackNavigator();
 
-function AuthFlow() {
-  return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen 
-        name="Login" 
-        component={LoginScreen} 
-      />
+// function AuthFlow() {
+//   return (
+//     <AuthStack.Navigator>
+//       <AuthStack.Screen 
+//         name="Login" 
+//         component={LoginScreen} 
+//       />
 
-      <AuthStack.Screen 
-        name="SignIn"
-        component={SignupScreen}
-      />
-    </AuthStack.Navigator>
-  );
-}
+//       <AuthStack.Screen 
+//         name="SignIn"
+//         component={SignupScreen}
+//       />
+//     </AuthStack.Navigator>
+//   );
+// }
+
+const Stack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -45,7 +48,18 @@ export default function App() {
     //<PaperProvider>
     <SafeAreaProvider>
         <NavigationContainer>
-          <Tab.Navigator initialRouteName="Home">
+          <Stack.Navigator initalRouteName="Login">
+            <Stack.Screen
+              name = "Login"
+              component = {LoginScreen}
+            />
+
+            <Stack.Screen
+              name = "Signup"
+              component = {SignupScreen}
+            />
+          </Stack.Navigator>
+          {/* <Tab.Navigator initialRouteName="Home">
             <Tab.Screen
               name="Home"
               component={HomeScreen}
@@ -118,9 +132,9 @@ export default function App() {
                 ),
               }}
             />
-          </Tab.Navigator>
+          </Tab.Navigator> */}
         </NavigationContainer>
     </SafeAreaProvider>
-    //</PaperProvider>
+
   );
 }

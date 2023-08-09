@@ -28,7 +28,7 @@ const MyComponent = () => (
 );
 
 
-const LoginScreen = (/*{navigation}*/) => {
+const LoginScreen = ({navigation}) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   
@@ -49,7 +49,7 @@ const LoginScreen = (/*{navigation}*/) => {
         <Text variant="displayMedium">Thrift with Drift</Text>
         
       </Appbar.Header>
-      <Text variant="titleLarge">Login:</Text>
+      {/* <Text variant="titleLarge">Login:</Text> */}
 
       <TextInput
         label="Email"
@@ -75,8 +75,8 @@ const LoginScreen = (/*{navigation}*/) => {
 
       <Button 
         onPress={() => {
-          console.log('sign up pressed');
-          //navigation.navigate('SignUpScreen');
+          console.log("sign up pressed");
+          navigation.navigate("Signup");
           }
         }>
         New user? Sign up here
