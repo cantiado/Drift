@@ -6,6 +6,7 @@ const SignupScreen = () => {
   const [firstName, setfirstName] = React.useState("");
   const [lastName, setlastName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [confirmEmail, setConfirmEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
@@ -22,6 +23,13 @@ const SignupScreen = () => {
       alert('Please enter a valid email');
       return;
     }
+    if (!confirmEmail.trim()) {
+      alert('Please re-enter your email');
+      return;
+    }
+    if(email !== confirmEmail) {
+      alert('Emails do not match, please ensure they match')
+    }
     if (!password.trim()) {
       alert('Please enter a password')
       return
@@ -30,7 +38,9 @@ const SignupScreen = () => {
       alert('Please enter re-enter your password')
       return
     }
-
+    if(email !== confirmEmail) {
+      alert('Emails do not match, please ensure they match')
+    }
     if(password !== confirmPassword) {
       alert('Passwords do not match, please ensure they match')
       return
@@ -61,6 +71,12 @@ const SignupScreen = () => {
         label="Email"
         value={email}
         onChangeText={email => setEmail(email)}
+      />
+
+      <TextInput
+        label="Confirm email"
+        value={confirmEmail}
+        onChangeText={confirmEmail => setConfirmEmail(confirmEmail)}
       />
 
       <TextInput
