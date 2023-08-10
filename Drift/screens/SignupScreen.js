@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
+import { registerUser } from "../firebase/authentication";
+import { getCurrentUserUID } from "../firebase/authentication";
 
 const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
@@ -9,6 +11,7 @@ const SignupScreen = ({navigation}) => {
   const [confirmEmail, setConfirmEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  let code = 0; //comment here later
 
   const checkFormInput = () => {
     if (!firstName) {
@@ -92,10 +95,13 @@ const SignupScreen = ({navigation}) => {
       />
 
       <Button mode="elevated" 
-              onPress={() => {
+              onPress={async () => {
                 console.log('Pressed');
                 checkFormInput();
-    
+                //code = await registerUser(email, password, firstName, lastName);
+                //console.log(code);
+                console.log("Howdy,", getCurrentUserUID());
+                //switch statments :D
               }
         }>
         Sign up

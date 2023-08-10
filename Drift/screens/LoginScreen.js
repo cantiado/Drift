@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
-
+import {logInUser} from "../firebase/authentication";
 
 //this is for text, not entirely sure if needed
 const MyComponent = () => (
@@ -32,6 +32,7 @@ const MyComponent = () => (
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  let uid = "";
   
   const checkFormInput = () => {
     if (!email) {
@@ -67,11 +68,13 @@ const LoginScreen = ({navigation}) => {
 
       <Button 
         mode="elevated"
-        onPress={() => {
+        onPress={async () => {
           console.log('Pressed');
-          checkFormInput();
+          checkFormInput(); //NEED TO PUT A CHECK HERE TO MAKE SURE EVERYTHING IS VALID BEFORE PROCEEDING
           console.log(email);
           console.log(password);
+          uid = await logInUser(email, password);
+          console.log(uid);
           }
         }>
         Log in
