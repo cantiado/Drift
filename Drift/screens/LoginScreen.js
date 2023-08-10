@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
 
+
 //this is for text, not entirely sure if needed
 const MyComponent = () => (
   <>
@@ -33,11 +34,11 @@ const LoginScreen = ({navigation}) => {
   const [password, setPassword] = React.useState("");
   
   const checkFormInput = () => {
-    if (!email.trim()) {
+    if (!email) {
       alert('Please enter a valid email');
       return;
     }
-    if (!password.trim()) {
+    if (!password) {
       alert('Please enter your password')
       return
     }
@@ -59,6 +60,7 @@ const LoginScreen = ({navigation}) => {
 
       <TextInput
         label="Password"
+        secureTextEntry={true}
         value={password}
         onChangeText={password => setPassword(password)}
       />
@@ -68,6 +70,8 @@ const LoginScreen = ({navigation}) => {
         onPress={() => {
           console.log('Pressed');
           checkFormInput();
+          console.log(email);
+          console.log(password);
           }
         }>
         Log in

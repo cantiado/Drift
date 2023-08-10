@@ -11,30 +11,30 @@ const SignupScreen = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
   const checkFormInput = () => {
-    if (!firstName.trim()) {
+    if (!firstName) {
       alert('Please enter a first name');
       return;
     }
-    if (!lastName.trim()) {
+    if (!lastName) {
       alert('Please enter a last name');
       return;
     }
-    if (!email.trim()) {
+    if (!email) {
       alert('Please enter a valid email');
       return;
     }
-    if (!confirmEmail.trim()) {
+    if (!confirmEmail) {
       alert('Please re-enter your email');
       return;
     }
     if(email !== confirmEmail) {
       alert('Emails do not match, please ensure they match')
     }
-    if (!password.trim()) {
+    if (!password) {
       alert('Please enter a password')
       return
     }
-    if (!confirmPassword.trim()) {
+    if (!confirmPassword) {
       alert('Please enter re-enter your password')
       return
     }
