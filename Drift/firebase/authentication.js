@@ -74,8 +74,6 @@ export async function logInUser(email, password) {
   let userCredential = null;
   try {
     userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log(userCredential.user);
-    console.log(userCredential.user.displayName);
     return userCredential.user.uid;
   } catch (error) {
     console.error(error);
