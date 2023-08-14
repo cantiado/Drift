@@ -3,17 +3,30 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { StackActions } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/FontAwesome";
+
 import theme from "./assets/theme";
-import HomeScreen from "./screens/HomeScreen";
-import SavedScreen from "./screens/SavedScreen";
-import MessagesScreen from "./screens/MessagesScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
+import DriftHomeNavigation from "./screens/DriftHomeNavigation";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { getCurrentUserUID } from "./firebase/authentication";
 
+const Stack = createStackNavigator();
+const AuthFlow = () => {
+  return (
+    <Stack.Navigator initalRouteName="Login">
+            <Stack.Screen
+              name = "Login"
+              component = {LoginScreen}
+            />
+            <Stack.Screen
+              name = "Signup"
+              component = {SignupScreen}
+            />
+    </Stack.Navigator>
+  );
+};
 // const AuthStack = createStackNavigator();
 
 // function AuthFlow() {
@@ -32,9 +45,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 //   );
 // }
 
-const Stack = createStackNavigator();
 
-const Tab = createMaterialBottomTabNavigator();
+
+//const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,12 +56,41 @@ export default function App() {
   // const toggleAuthentication = () => {
   //   setIsAuthenticated((prev) => !prev);
   // };
+  userUID = getCurrentUserUID();
+
+
+
+
+
+  
 
   return (
-    //<PaperProvider>
+    <PaperProvider>
     <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator initalRouteName="Login">
+          <Stack.Navigator initalRouteName="AuthFlow">
+            (userUID === null) ? (
+              <>
+                <Stack.Screen
+                  name = "AuthFlow"
+                  component = {AuthFlow}
+                  options={{headerShown: false}}
+                  />
+              </>
+
+            ) : (
+              <>
+                <Stack.Screen
+                  name = "DriftHomeNavigation"
+                  component = {DriftHomeNavigation}
+                  options={ {headShown: false}}
+                />
+              </>
+            );
+           
+            
+          </Stack.Navigator>
+          {/* <Stack.Navigator initalRouteName="Login">
             <Stack.Screen
               name = "Login"
               component = {LoginScreen}
@@ -58,7 +100,7 @@ export default function App() {
               name = "Signup"
               component = {SignupScreen}
             />
-          </Stack.Navigator>
+          </Stack.Navigator> */}
           {/* <Tab.Navigator initialRouteName="Home">
             <Tab.Screen
               name="Home"
@@ -135,6 +177,7 @@ export default function App() {
           </Tab.Navigator> */}
         </NavigationContainer>
     </SafeAreaProvider>
+    </PaperProvider>
 
   );
 }
