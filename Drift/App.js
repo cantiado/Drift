@@ -10,8 +10,8 @@ import SignupScreen from "./screens/SignupScreen";
 import DriftHomeNavigation from "./screens/DriftHomeNavigation";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { getCurrentUserUID } from "./firebase/authentication";
-import HomeScreen from "./screens/HomeScreen";
+//import { getCurrentUserUID } from "./firebase/authentication";
+//import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 const AuthFlow = () => {
@@ -57,7 +57,7 @@ export default function App() {
   // const toggleAuthentication = () => {
   //   setIsAuthenticated((prev) => !prev);
   // };
-  userUID = getCurrentUserUID();
+  //userUID = getCurrentUserUID();
 
   // if (userUID === null) {
   //   return( 
