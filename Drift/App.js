@@ -11,6 +11,7 @@ import DriftHomeNavigation from "./screens/DriftHomeNavigation";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { getCurrentUserUID } from "./firebase/authentication";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 const AuthFlow = () => {
@@ -58,126 +59,58 @@ export default function App() {
   // };
   userUID = getCurrentUserUID();
 
-
-
-
-
-  
-
+  // if (userUID === null) {
+  //   return( 
+  //     <PaperProvider>
+  //       <SafeAreaProvider>
+  //         <NavigationContainer>
+  //           <Stack.Navigator initalRouteName="AuthFlow">
+  //               <Stack.Screen
+  //                 name = "AuthFlow"
+  //                 component = {AuthFlow}
+  //                 options={{headerShown: false}}
+  //                 />
+  //           </Stack.Navigator>
+  //         </NavigationContainer>
+  //       </SafeAreaProvider>
+  //     </PaperProvider>
+  //   );
+  // }
+  // else{
+  //   return (
+  //     <PaperProvider>
+  //       <SafeAreaProvider>
+  //         <NavigationContainer>
+  //           <Stack.Navigator initalRouteName="DriftHomeNavigation">
+  //               <Stack.Screen
+  //                 name = "DriftHomeNavigation"
+  //                 component = {DriftHomeNavigation}
+  //                 options={ {headShown: false}}
+  //               />
+  //           </Stack.Navigator>
+  //         </NavigationContainer>
+  //       </SafeAreaProvider>
+  //     </PaperProvider>
+  //   );
+  // };
   return (
     <PaperProvider>
-    <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator initalRouteName="AuthFlow">
-            (userUID === null) ? (
-              <>
+       <SafeAreaProvider>
+         <NavigationContainer>
+            <Stack.Navigator initalRouteName="AuthFlow">
                 <Stack.Screen
-                  name = "AuthFlow"
-                  component = {AuthFlow}
+                 name = "AuthFlow"
+                 component = {AuthFlow}
                   options={{headerShown: false}}
-                  />
-              </>
-
-            ) : (
-              <>
+                 />
                 <Stack.Screen
                   name = "DriftHomeNavigation"
                   component = {DriftHomeNavigation}
                   options={ {headShown: false}}
-                />
-              </>
-            );
-           
-            
-          </Stack.Navigator>
-          {/* <Stack.Navigator initalRouteName="Login">
-            <Stack.Screen
-              name = "Login"
-              component = {LoginScreen}
-            />
-
-            <Stack.Screen
-              name = "Signup"
-              component = {SignupScreen}
-            />
-          </Stack.Navigator> */}
-          {/* <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="home"
-                    //size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Saved"
-              component={SavedScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="star"
-                    //size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Messages"
-              component={MessagesScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="envelope"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Profile"
-              component={ProfileScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="user"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="user"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Signup"
-              component={SignupScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="user"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-          </Tab.Navigator> */}
-        </NavigationContainer>
-    </SafeAreaProvider>
-    </PaperProvider>
-
+               />
+           </Stack.Navigator>
+         </NavigationContainer>
+       </SafeAreaProvider>
+      </PaperProvider>
   );
 }

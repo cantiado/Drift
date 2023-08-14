@@ -75,6 +75,9 @@ const LoginScreen = ({navigation}) => {
           console.log(password);
           uid = await logInUser(email, password);
           console.log(uid);
+          if (uid !== null) {
+            navigation.navigate("DriftHomeNavigation");
+          }
           }
         }>
         Log in

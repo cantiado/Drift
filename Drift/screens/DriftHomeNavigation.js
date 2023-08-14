@@ -8,10 +8,9 @@ import MessagesScreen from "./SavedScreen";
 import ProfileScreen from "./ProfileScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const HomeTabNavStack = () => {
+const HomeTabNavStack = ({navigation}) => {
     const Tab = createMaterialBottomTabNavigator();
     return (
-      <View>
         <PaperProvider>
         <Tab.Navigator initialRouteName="Home">
             <Tab.Screen
@@ -64,7 +63,6 @@ const HomeTabNavStack = () => {
             />
           </Tab.Navigator>
         </PaperProvider>
-      </View>
     );
   };
   
