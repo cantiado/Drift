@@ -97,7 +97,9 @@ export default function App() {
     <PaperProvider>
        <SafeAreaProvider>
          <NavigationContainer>
-            <Stack.Navigator initalRouteName="AuthFlow">
+            <Stack.Navigator initalRouteName="AuthFlow" screenOptions={{
+    headerShown: false
+  }}>
                 <Stack.Screen
                  name = "AuthFlow"
                  component = {AuthFlow}
