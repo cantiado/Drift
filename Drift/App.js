@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import theme from "./assets/theme";
-import HomeScreen from "./screens/HomeScreen";
+import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import SavedScreen from "./screens/SavedScreen";
 import MessagesScreen from "./screens/MessagesScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -12,6 +12,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const AuthStack = createStackNavigator();
 
@@ -37,6 +38,7 @@ export default function App() {
   return (
     //<PaperProvider>
     <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
           <Tab.Navigator initialRouteName="Home">
             <Tab.Screen
@@ -89,6 +91,7 @@ export default function App() {
             />
           </Tab.Navigator>
         </NavigationContainer>
+        </GestureHandlerRootView>
     </SafeAreaProvider>
     //</PaperProvider>
   );
