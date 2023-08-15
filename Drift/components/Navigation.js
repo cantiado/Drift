@@ -2,10 +2,10 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Provider as PaperProvider } from "react-native-paper";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
-import HomeScreen from "./HomeScreen";
-import SavedScreen from "./SavedScreen";
-import MessagesScreen from "./SavedScreen";
-import ProfileScreen from "./ProfileScreen";
+import HomeScreen from "../screens/HomeScreen/HomeScreen";
+import SavedScreen from "../screens/SavedScreen";
+import MessagesScreen from "../screens/SavedScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const HomeTabNavStack = ({navigation}) => {

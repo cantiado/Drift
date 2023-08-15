@@ -3,19 +3,13 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { StackActions } from '@react-navigation/native';
-
 import theme from "./assets/theme";
-import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import SavedScreen from "./screens/SavedScreen";
-import MessagesScreen from "./screens/MessagesScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
-import DriftHomeNavigation from "./screens/DriftHomeNavigation";
+import DriftNavigation from "./components/Navigation";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 //import { getCurrentUserUID } from "./firebase/authentication";
-//import HomeScreen from "./screens/HomeScreen";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
@@ -112,8 +106,8 @@ export default function App() {
                   options={{headerShown: false}}
                  />
                 <Stack.Screen
-                  name = "DriftHomeNavigation"
-                  component = {DriftHomeNavigation}
+                  name = "DriftNavigation"
+                  component = {DriftNavigation}
                   options={ {headShown: false}}
                />
            </Stack.Navigator>
