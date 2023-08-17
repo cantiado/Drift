@@ -49,15 +49,15 @@ export async function registerUser(email, password, first, last) {
     return 1;
   } catch (error) {
     console.error(error);
-    switch(error.code) {
+    switch (error.code) {
       case "auth/email-already-in-use":
         return -1;
       case "auth/invalid-email":
-        return -2
+        return -2;
       case "auth/weak-password":
-        return -3
+        return -3;
       default:
-        return 0
+        return 0;
     }
   }
   return NaN;
@@ -82,18 +82,32 @@ export async function logInUser(email, password) {
 }
 
 /**Gets the currently authenticated user's UID. If there is no authenticated user, returns null.
- * 
+ *
  * @returns The user's UID or null.
  */
 export function getCurrentUserUID() {
-  return auth.currentUser ? auth.currentUser.uid : null
+  return auth.currentUser ? auth.currentUser.uid : null;
 }
 
 /**Gets the currently authenticated user's display name (default: FirstName LastName).
  * If there is no authenticated user, returns null.
- * 
+ *
  * @returns The user's display name or null.
  */
 export function getCurrentUserDisplayName() {
-  return auth.currentUser ? auth.currentUser.displayName : null
+  return auth.currentUser ? auth.currentUser.displayName : null;
+}
+
+/**Logs out the currently authenticated user.
+ *
+ * @returns True if successful and false otherwise
+ */
+export async function logOut() {
+  try {
+    await auth.signOut();
+    return true;
+  } catch (error) {
+    console.error(error);
+  }
+  return false;
 }
