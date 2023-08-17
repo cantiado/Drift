@@ -3,17 +3,30 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { StackActions } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/FontAwesome";
 import theme from "./assets/theme";
-import HomeScreen from "./screens/HomeScreen";
-import SavedScreen from "./screens/SavedScreen";
-import MessagesScreen from "./screens/MessagesScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
+import DriftNavigation from "./components/Navigation";
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+//import { getCurrentUserUID } from "./firebase/authentication";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+const Stack = createStackNavigator();
+const AuthFlow = () => {
+  return (
+    <Stack.Navigator initalRouteName="Login">
+            <Stack.Screen
+              name = "Login"
+              component = {LoginScreen}
+            />
+            <Stack.Screen
+              name = "Signup"
+              component = {SignupScreen}
+            />
+    </Stack.Navigator>
+  );
+};
 // const AuthStack = createStackNavigator();
 
 // function AuthFlow() {
@@ -32,9 +45,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 //   );
 // }
 
-const Stack = createStackNavigator();
 
-const Tab = createMaterialBottomTabNavigator();
+
+//const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,98 +56,64 @@ export default function App() {
   // const toggleAuthentication = () => {
   //   setIsAuthenticated((prev) => !prev);
   // };
+  //userUID = getCurrentUserUID();
 
+  // if (userUID === null) {
+  //   return( 
+  //     <PaperProvider>
+  //       <SafeAreaProvider>
+  //         <NavigationContainer>
+  //           <Stack.Navigator initalRouteName="AuthFlow">
+  //               <Stack.Screen
+  //                 name = "AuthFlow"
+  //                 component = {AuthFlow}
+  //                 options={{headerShown: false}}
+  //                 />
+  //           </Stack.Navigator>
+  //         </NavigationContainer>
+  //       </SafeAreaProvider>
+  //     </PaperProvider>
+  //   );
+  // }
+  // else{
+  //   return (
+  //     <PaperProvider>
+  //       <SafeAreaProvider>
+  //         <NavigationContainer>
+  //           <Stack.Navigator initalRouteName="DriftHomeNavigation">
+  //               <Stack.Screen
+  //                 name = "DriftHomeNavigation"
+  //                 component = {DriftHomeNavigation}
+  //                 options={ {headShown: false}}
+  //               />
+  //           </Stack.Navigator>
+  //         </NavigationContainer>
+  //       </SafeAreaProvider>
+  //     </PaperProvider>
+  //   );
+  // };
   return (
-    //<PaperProvider>
-    <SafeAreaProvider>
+    <PaperProvider>
+       <SafeAreaProvider>
+       <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
-          <Stack.Navigator initalRouteName="Login">
-            <Stack.Screen
-              name = "Login"
-              component = {LoginScreen}
-            />
-
-            <Stack.Screen
-              name = "Signup"
-              component = {SignupScreen}
-            />
-          </Stack.Navigator>
-          {/* <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="home"
-                    //size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Saved"
-              component={SavedScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="star"
-                    //size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Messages"
-              component={MessagesScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="envelope"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Profile"
-              component={ProfileScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="user"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="user"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Signup"
-              component={SignupScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="user"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-          </Tab.Navigator> */}
-        </NavigationContainer>
+            <Stack.Navigator initalRouteName="AuthFlow" screenOptions={{
+    headerShown: false
+  }}>
+                <Stack.Screen
+                 name = "AuthFlow"
+                 component = {AuthFlow}
+                  options={{headerShown: false}}
+                 />
+                <Stack.Screen
+                  name = "DriftNavigation"
+                  component = {DriftNavigation}
+                  options={ {headShown: false}}
+               />
+           </Stack.Navigator>
+         </NavigationContainer>
+           </GestureHandlerRootView>
     </SafeAreaProvider>
-
+      </PaperProvider>
   );
 }

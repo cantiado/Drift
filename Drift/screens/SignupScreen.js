@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
+import { registerUser } from "../firebase/authentication";
+import { getCurrentUserUID } from "../firebase/authentication";
 
 const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
@@ -9,32 +11,33 @@ const SignupScreen = ({navigation}) => {
   const [confirmEmail, setConfirmEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  let code = 0; //comment here later
 
   const checkFormInput = () => {
-    if (!firstName.trim()) {
+    if (!firstName) {
       alert('Please enter a first name');
       return;
     }
-    if (!lastName.trim()) {
+    if (!lastName) {
       alert('Please enter a last name');
       return;
     }
-    if (!email.trim()) {
+    if (!email) {
       alert('Please enter a valid email');
       return;
     }
-    if (!confirmEmail.trim()) {
+    if (!confirmEmail) {
       alert('Please re-enter your email');
       return;
     }
     if(email !== confirmEmail) {
       alert('Emails do not match, please ensure they match')
     }
-    if (!password.trim()) {
+    if (!password) {
       alert('Please enter a password')
       return
     }
-    if (!confirmPassword.trim()) {
+    if (!confirmPassword) {
       alert('Please enter re-enter your password')
       return
     }
@@ -92,10 +95,13 @@ const SignupScreen = ({navigation}) => {
       />
 
       <Button mode="elevated" 
-              onPress={() => {
+              onPress={async () => {
                 console.log('Pressed');
                 checkFormInput();
-    
+                //code = await registerUser(email, password, firstName, lastName);
+                //console.log(code);
+                console.log("Howdy,", getCurrentUserUID());
+                //switch statments :D
               }
         }>
         Sign up
