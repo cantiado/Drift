@@ -8,7 +8,7 @@ import {logInUser} from "../firebase/authentication";
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  let uid = "";
+  let code = 0; //code indicates successful login or cause of failed login when attempting to logInUser
   
   const isValidFormInput = () => {
     if (!email) {
@@ -19,7 +19,6 @@ const LoginScreen = ({navigation}) => {
       alert('Please enter your password')
       return false;
     }
-
     return true; //form is filled out
   };
 
@@ -28,16 +27,20 @@ const LoginScreen = ({navigation}) => {
     setPassword("");
   }
 
-
   const handleLogIn = async () => {
     if (isValidFormInput()) {
-      uid = await logInUser(email, password);
-      if (uid !== null) {
-        clearFormInput();
-        navigation.navigate("DriftNavigation");
-      } else {
-        alert('Invalid username or password. Please try again.');
-      }
+      code = await logInUser(email, password);
+      switch (code) {
+        case 1:
+          clearFormInput();
+          navigation.navigate("DriftNavigation");
+          break;
+        case -999:
+          alert('Error: An unexpected error ocurred. Please try again.');
+          break;
+        default:
+          alert('Invalid email or password. Please try again.');
+      } 
     }  
   }
 
@@ -63,8 +66,7 @@ const LoginScreen = ({navigation}) => {
       <Button 
         mode="elevated"
         onPress={() => {
-          console.log('Pressed');
-          handleLogIn();
+            handleLogIn();
           }
         }>
         Log in
@@ -72,8 +74,7 @@ const LoginScreen = ({navigation}) => {
 
       <Button 
         onPress={() => {
-          console.log("sign up pressed");
-          navigation.navigate("Signup");
+            navigation.navigate("Signup");
           }
         }>
         New user? Sign up here

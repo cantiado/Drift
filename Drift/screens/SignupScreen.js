@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
 import { registerUser } from "../firebase/authentication";
-import { getCurrentUserUID } from "../firebase/authentication";
+
 
 const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
@@ -61,30 +61,39 @@ const SignupScreen = ({navigation}) => {
   }
 
   const handleSignUp = async () => {
-    console.log('Pressed');
-    if(isValidFormInputFormInput()) {
+    if(isValidFormInput()) {
       code = await registerUser(email, password, firstName, lastName);
-      console.log(code);
       switch (code) {
-        //to be added when determined
-      }
-      
-      //on successful signup:
-      console.log("Howdy,", getCurrentUserUID());
-      clearFormInput();
-      navigation.navigate("DriftNavigation");
-      
-    }
-    
+        case 1:
+          clearFormInput();
+          navigation.navigate("DriftNavigation");
+          break;
+        case -10: 
+          alert('Error: An account already exists with this email.');
+          break;
+        case -11:
+          alert('Error: Invalid email. Please enter a valid email.');
+          break;
+        case -20:
+          alert('Error: Please create a stronger password.\nPasswords need to contain 8 or more characters long.');
+          break;
+        case -40:
+          alert('Error: Account could not be created. Please try again.');
+          break;
+        case -999:
+          alert('Error: An unexpected error ocurred. Please try again.');
+          break;
+        default:
+          alert('An unexpected error occured. Please try again.');
+      }  
+    }   
   }
 
   return (
     <View>
       <Appbar.Header>
         <Text variant="displayMedium">Thrift with Drift</Text>
-        
       </Appbar.Header>
-      {/* <Text variant="titleLarge">Sign up:</Text> */}
 
       <TextInput
         label="First name"
@@ -112,19 +121,20 @@ const SignupScreen = ({navigation}) => {
 
       <TextInput
         label="Password"
+        secureTextEntry={true}
         value={password}
         onChangeText={password => setPassword(password)}
       />
 
       <TextInput
         label="Confirm Password"
+        secureTextEntry={true}
         value={confirmPassword}
         onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
       />
 
       <Button mode="elevated" 
           onPress={ () => {
-            console.log("Pressed");
             handleSignUp();
           }
         }>
@@ -133,8 +143,7 @@ const SignupScreen = ({navigation}) => {
        
       <Button 
         onPress={() => {
-          console.log('return to login screen pressed');
-          navigation.navigate("Login");
+            navigation.navigate("Login");
           }
         }>
         Already have an account? Log in here
