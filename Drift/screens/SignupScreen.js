@@ -11,44 +11,72 @@ const SignupScreen = ({navigation}) => {
   const [confirmEmail, setConfirmEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  let code = 0; //comment here later
+  let code = 0; //Code will be used with the registerUser API function to determine if the user can successfully sign up or if there are errors
 
-  const checkFormInput = () => {
+  const isValidFormInput = () => {
     if (!firstName) {
       alert('Please enter a first name');
-      return;
+      return false;
     }
     if (!lastName) {
       alert('Please enter a last name');
-      return;
+      return false;
     }
     if (!email) {
       alert('Please enter a valid email');
-      return;
+      return false;
     }
     if (!confirmEmail) {
       alert('Please re-enter your email');
-      return;
+      return false;
     }
     if(email !== confirmEmail) {
-      alert('Emails do not match, please ensure they match')
+      alert('Emails do not match, please ensure they match');
+      return false;
     }
     if (!password) {
-      alert('Please enter a password')
-      return
+      alert('Please enter a password');
+      return false;
     }
     if (!confirmPassword) {
-      alert('Please enter re-enter your password')
-      return
+      alert('Please enter re-enter your password');
+      return false;
     }
-    if(email !== confirmEmail) {
-      alert('Emails do not match, please ensure they match')
-    }
+  
     if(password !== confirmPassword) {
-      alert('Passwords do not match, please ensure they match')
-      return
+      alert('Passwords do not match, please ensure they match');
+      return false;
     }
+
+    return true; //form is filled out and matching fields are matching
   };
+
+  const clearFormInput = () => {
+    setfirstName("");
+    setlastName("");
+    setEmail("");
+    setConfirmEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  }
+
+  const handleSignUp = async () => {
+    console.log('Pressed');
+    if(isValidFormInputFormInput()) {
+      code = await registerUser(email, password, firstName, lastName);
+      console.log(code);
+      switch (code) {
+        //to be added when determined
+      }
+      
+      //on successful signup:
+      console.log("Howdy,", getCurrentUserUID());
+      clearFormInput();
+      navigation.navigate("DriftNavigation");
+      
+    }
+    
+  }
 
   return (
     <View>
@@ -95,14 +123,10 @@ const SignupScreen = ({navigation}) => {
       />
 
       <Button mode="elevated" 
-              onPress={async () => {
-                console.log('Pressed');
-                checkFormInput();
-                //code = await registerUser(email, password, firstName, lastName);
-                //console.log(code);
-                console.log("Howdy,", getCurrentUserUID());
-                //switch statments :D
-              }
+          onPress={ () => {
+            console.log("Pressed");
+            handleSignUp();
+          }
         }>
         Sign up
        </Button>
