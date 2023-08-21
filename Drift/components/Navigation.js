@@ -5,6 +5,7 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
 import MessagesScreen from "../screens/SavedScreen";
+import ItemUploadScreen from "../screens/ItemUploadScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -44,6 +45,18 @@ const HomeTabNavStack = ({navigation}) => {
                 tabBarIcon: ({ color, size }) => (
                   <Icon
                     name="envelope"
+                    size={size} color={color}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Item Upload"
+              component={ItemUploadScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Icon
+                    name="plus"
                     size={size} color={color}
                   />
                 ),

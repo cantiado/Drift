@@ -79,6 +79,16 @@ const LoginScreen = ({navigation}) => {
         }>
         New user? Sign up here
       </Button>
+      
+      {/* NEED TO REMOVE ONCE PAGES ARE DONE */}
+      <Button
+        mode="elevated"
+        onPress={()=> {
+          navigation.navigate("DriftNavigation");
+          }
+        }>
+          Dev
+      </Button>
 
     </View>
   );
