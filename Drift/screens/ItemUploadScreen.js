@@ -4,6 +4,9 @@ import { Appbar,Text,TextInput,HelperText } from "react-native-paper";
 import { ItemNameInput } from "../components/ItemNameInput";
 import { ItemPriceInput } from "../components/ItemPriceInput";
 import { ItemDescriptionInput } from "../components/ItemDescriptionInput";
+import { ItemQualityInput } from "../components/ItemQualityInput";
+import { ItemSizeInput } from "../components/ItemSizeInput";
+import { ItemDemographicInput } from "../components/ItemDemographic";
 
 const ItemUploadScreen = () => {
     //const [searchQuery, setSearchQuery] = React.useState("");
@@ -19,6 +22,9 @@ const ItemUploadScreen = () => {
         <ItemNameInput/>
         <ItemPriceInput/>
         <ItemDescriptionInput/>
+        <ItemQualityInput/>
+        <ItemSizeInput/>
+        <ItemDemographicInput/>
       </View>
     );
   };

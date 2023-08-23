@@ -8,7 +8,7 @@ const ItemDescriptionInput = () => {
             label="Item Description"
             value={itemDescription}
             mode="outlined"
-            multiline="true"
+            multiline={true}
             style={{height:100}}
             onChangeText={itemDescription => setItemDescription(itemDescription)}       
         />   
