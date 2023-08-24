@@ -1,13 +1,11 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { SegmentedButtons, Text } from 'react-native-paper';
 
 const ItemQualityInput = () => {
   const [value, setValue] = React.useState('');
 
   return (
-    <SafeAreaView>
-      <Text>Item Quality</Text>
       <SegmentedButtons
         value={value}
         onValueChange={setValue}
@@ -19,7 +17,6 @@ const ItemQualityInput = () => {
           { value: 'Brand New', label: 'Brand New' },
         ]}
       />
-    </SafeAreaView>
   );
 };
 

@@ -13,5 +13,5 @@ const ItemDescriptionInput = () => {
             onChangeText={itemDescription => setItemDescription(itemDescription)}       
         />   
     )
-}
+};
 export {ItemDescriptionInput};
