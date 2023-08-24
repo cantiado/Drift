@@ -3,55 +3,52 @@ import { View } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
 import {logInUser} from "../firebase/authentication";
 
-//this is for text, not entirely sure if needed
-const MyComponent = () => (
-  <>
-    <Text variant="displayLarge">Display Large</Text>
-    <Text variant="displayMedium">Display Medium</Text>
-    <Text variant="displaySmall">Display small</Text>
-
-    <Text variant="headlineLarge">Headline Large</Text>
-    <Text variant="headlineMedium">Headline Medium</Text>
-    <Text variant="headlineSmall">Headline Small</Text>
-
-    <Text variant="titleLarge">Title Large</Text>
-    <Text variant="titleMedium">Title Medium</Text>
-    <Text variant="titleSmall">Title Small</Text>
-
-    <Text variant="bodyLarge">Body Large</Text>
-    <Text variant="bodyMedium">Body Medium</Text>
-    <Text variant="bodySmall">Body Small</Text>
-
-    <Text variant="labelLarge">Label Large</Text>
-    <Text variant="labelMedium">Label Medium</Text>
-    <Text variant="labelSmall">Label Small</Text>
- </>
-);
 
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  let uid = "";
+  let code = 0; //code indicates successful login or cause of failed login when attempting to logInUser
   
-  const checkFormInput = () => {
+  const isValidFormInput = () => {
     if (!email) {
       alert('Please enter a valid email');
-      return;
+      return false;
     }
     if (!password) {
       alert('Please enter your password')
-      return
+      return false;
     }
+    return true; //form is filled out
   };
+
+  const clearFormInput = () => {
+    setEmail("");
+    setPassword("");
+  }
+
+  const handleLogIn = async () => {
+    if (isValidFormInput()) {
+      code = await logInUser(email, password);
+      switch (code) {
+        case 1:
+          clearFormInput();
+          navigation.navigate("DriftNavigation");
+          break;
+        case -999:
+          alert('Error: An unexpected error ocurred. Please try again.');
+          break;
+        default:
+          alert('Invalid email or password. Please try again.');
+      } 
+    }  
+  }
 
   return (
     <View>
       <Appbar.Header>
-        <Text variant="displayMedium">Thrift with Drift</Text>
-        
+        <Text variant="displayMedium">Thrift with Drift</Text>    
       </Appbar.Header>
-      {/* <Text variant="titleLarge">Login:</Text> */}
 
       <TextInput
         label="Email"
@@ -68,16 +65,8 @@ const LoginScreen = ({navigation}) => {
 
       <Button 
         mode="elevated"
-        onPress={async () => {
-          console.log('Pressed');
-          checkFormInput(); //NEED TO PUT A CHECK HERE TO MAKE SURE EVERYTHING IS VALID BEFORE PROCEEDING
-          console.log(email);
-          console.log(password);
-          uid = await logInUser(email, password);
-          console.log(uid);
-          if (uid !== null) {
-            navigation.navigate("DriftNavigation");
-          }
+        onPress={() => {
+            handleLogIn();
           }
         }>
         Log in
@@ -85,8 +74,7 @@ const LoginScreen = ({navigation}) => {
 
       <Button 
         onPress={() => {
-          console.log("sign up pressed");
-          navigation.navigate("Signup");
+            navigation.navigate("Signup");
           }
         }>
         New user? Sign up here
