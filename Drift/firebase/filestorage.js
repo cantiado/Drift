@@ -2,22 +2,53 @@ import { storage } from "./config";
 import { ref, uploadBytes, uploadString } from "firebase/storage";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
-/**
+const IMAGE_SELECTION_LIMIT = 5;
+
+/**Uploads a user's image of an item to the cloud storage
+ * and returns the file path `<user>/<item>/<fname>`.
  *
- * @param {string} uri
- * @returns
+ * @param {string} uri The image URI.
+ * @param {string} user The user's unique ID.
+ * @param {string} item The item's unique ID.
+ * @param {string} fname The image's file name.
+ * @returns The file path on success and null otherwise.
  */
-async function uploadImage(uri) {
-  const IMAGE_REF = ref(storage, "testpath");
-  await uploadString(IMAGE_REF, uri, "data_url");
-  return 1;
+export async function uploadImage(uri, user, item, fname) {
+  const fpath = `${user}/${item}/${fname}`;
+  const imageRef = ref(storage, fpath);
+  try {
+    await uploadString(imageRef, uri, "data_url");
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+  return fpath;
 }
 
-export async function getImageFromLibrary() {
-  const RESULT = await launchImageLibrary({
+/**Opens the user's image library to select images.
+ *
+ * @returns An array of image URIs on success and null otherwise.
+ */
+export async function getImagesFromLibrary() {
+  const result = await launchImageLibrary({
     mediaType: "photo",
-    selectionLimit: 1,
+    selectionLimit: IMAGE_SELECTION_LIMIT, // Doesn't work on web
   });
-  console.log(RESULT.assets[0]);
-  await uploadImage("", RESULT.assets[0].uri);
+  console.log(result);
+  if (result.errorCode) {
+    console.error(result.errorCode, ":", result.errorMessage);
+    return null;
+  }
+  if (result.didCancel) {
+    console.log("Canceled");
+    console.error(result.errorCode, ":", result.errorMessage);
+    return null;
+  }
+  if (result.assets.length > IMAGE_SELECTION_LIMIT) {
+    console.error(
+      `Exceeded image selection limit (${result.assets.length} > ${IMAGE_SELECTION_LIMIT})!`
+    );
+    return null;
+  }
+  return result.assets.map((img) => String(img.uri));
 }
