@@ -2,16 +2,36 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Provider as PaperProvider } from "react-native-paper";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
-import MessagesScreen from "../screens/SavedScreen";
+import UploadScreen from "../screens/UploadScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import ProductScreen from "../screens/ProductScreen";
+import LoginScreen from "../screens/LoginScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 
+const Stack = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+const AppNavStack =  ({ navigation }) => {
+  return (
+    <PaperProvider>
+      <Stack.Navigator initialRouteName="HomeTabs">
+        <Stack.Screen
+          name="HomeTabNavStack"
+          component={HomeTabNavStack}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </PaperProvider>
+  );
+}
+
 const HomeTabNavStack = ({navigation}) => {
-    const Tab = createMaterialBottomTabNavigator();
     return (
-        <PaperProvider>
         <Tab.Navigator initialRouteName="Home">
             <Tab.Screen
               name="Home"
@@ -20,6 +40,18 @@ const HomeTabNavStack = ({navigation}) => {
                 tabBarIcon: ({ color, size }) => (
                   <Icon
                     name="home"
+                    //size={size} color={color}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Upload"
+              component={UploadScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Icon
+                    name="plus"
                     //size={size} color={color}
                   />
                 ),
@@ -38,18 +70,6 @@ const HomeTabNavStack = ({navigation}) => {
               }}
             />
             <Tab.Screen
-              name="Messages"
-              component={MessagesScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="envelope"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
               name="Profile"
               component={ProfileScreen}
               options={{
@@ -62,8 +82,7 @@ const HomeTabNavStack = ({navigation}) => {
               }}
             />
           </Tab.Navigator>
-        </PaperProvider>
     );
   };
   
-  export default HomeTabNavStack;
+  export default AppNavStack;

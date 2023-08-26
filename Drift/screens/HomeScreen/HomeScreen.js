@@ -8,10 +8,17 @@ import Categories from "./Categories";
 import Products from "./Products";
 
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [searchResults, setSearchResults] = React.useState("");
   const onChangeSearch = (query) => setSearchQuery(query);
+
+  useEffect(() => {
+    setTimeout(() => {
+        navigation.navigate('Product');
+        console.log(navigation);
+    }, 5000);
+}, []);
 
   useEffect(() => {
     //fetch data based on searchQuery
@@ -32,7 +39,7 @@ const HomeScreen = () => {
           onPress={() => console.log("Pressed")}
         />
       </Appbar.Header>
-      {searchQuery === '' ? <Categories setSearchQuery = {setSearchQuery}/> : <Products/>}
+      {searchQuery === '' ? <Categories setSearchQuery = {setSearchQuery}/> : <Products navigation={navigation}/>}
     </View>
   );
 };
