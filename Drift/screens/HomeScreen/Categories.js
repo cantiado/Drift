@@ -3,20 +3,15 @@ import { View, FlatList, Image} from "react-native";
 import { IconButton,Card, Title} from "react-native-paper";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const categories = [
-    { id: "1", title: "Shirts" },
-    { id: "2", title: "Pants" },
-    { id: "3", title: "Shoes" },
-    // Add more items as needed
-];
+const categories = ["Tops", "Bottoms", "Dresses", "Coats & Jackets", "Jumpsuits & Rompers", "Suits", "Footwear", "Accessories", "Sleepwear", "Underwear", "Swimwear", "Costume"]
 
 const Categories = ({setSearchQuery}) => {
   
     const renderCategory = ({ item }) => (
-        <TouchableOpacity onPress={() => setSearchQuery(item.title)}>
+        <TouchableOpacity onPress={() => setSearchQuery(item)}>
             <Card style={{ margin: 8 }}>
                 <Card.Content>
-                <Title>{item.title}</Title>
+                <Title>{item}</Title>
                 </Card.Content>
             </Card>
         </TouchableOpacity>
@@ -28,7 +23,7 @@ const Categories = ({setSearchQuery}) => {
           data={categories}
           renderItem={renderCategory}
           numColumns={2} // Number of columns you want in the grid
-          keyExtractor={(item) => item.id}
+          keyExtractor={(categoryName) => categoryName}
           contentContainerStyle={{ padding: 8 }}
         />
         </View>
