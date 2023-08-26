@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { List } from "react-native-paper";
 import { Avatar } from '@rneui/themed';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   return (
     <View>
       <Appbar.Header>
@@ -18,7 +18,7 @@ const ProfileScreen = () => {
           description="Username"
         />
 
-        <Appbar.Action icon="cog" onPress={() => {}} />
+        <Appbar.Action icon="cog" onPress={() => {navigation.navigate('Login')}} />
       </Appbar.Header>
     </View>
   );

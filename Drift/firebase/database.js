@@ -159,24 +159,40 @@ export async function createItem(
       otherTags,
       upload: new Date(),
     });
-    let imgRefs = [];
+    let imgURLs = [];
     let index = 0;
     for (const uri of imgURIs) {
-      const ref = await uploadImage(uri, owner, itemRef.id, index);
-      if (ref === null) {
+      const url = await uploadImage(uri, owner, itemRef.id, index);
+      if (url === null) {
         await deleteDoc(itemRef);
         throw "An image failed to upload!";
       }
-      imgRefs.push(ref);
+      imgURLs.push(url);
       index++;
     }
-    await updateDoc(itemRef, { images: imgRefs });
+    await updateDoc(itemRef, { images: imgURLs });
     console.log(`Created new item with uid: ${itemRef.id}`);
   } catch (error) {
     console.error(error);
     return false;
   }
   return true;
+}
+
+/**Gets an item's data from the `items` collection.
+ *
+ * @param {string} uid The user's unique ID.
+ * @returns The user's data on successful retrieval and null otherwise.
+ */
+export async function getItemData(uid) {
+  let docSnap = null;
+  try {
+    docSnap = await getDoc(doc(db, "items", uid));
+  } catch (error) {
+    console.error(error);
+  }
+  if (docSnap === null || !docSnap.exists()) return null;
+  return docSnap.data();
 }
 
 /**Checks if the user exists.
