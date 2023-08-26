@@ -1,5 +1,5 @@
 import { storage } from "./config";
-import { ref, uploadBytes, uploadString } from "firebase/storage";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 const IMAGE_SELECTION_LIMIT = 5;
@@ -11,18 +11,20 @@ const IMAGE_SELECTION_LIMIT = 5;
  * @param {string} user The user's unique ID.
  * @param {string} item The item's unique ID.
  * @param {string} fname The image's file name.
- * @returns The file path on success and null otherwise.
+ * @returns The image URL on success and null otherwise.
  */
 export async function uploadImage(uri, user, item, fname) {
   const fpath = `${user}/${item}/${fname}`;
   const imageRef = ref(storage, fpath);
+  let url;
   try {
     await uploadString(imageRef, uri, "data_url");
+    url = await getDownloadURL(imageRef)
   } catch (error) {
     console.error(error);
     return null;
   }
-  return fpath;
+  return url;
 }
 
 /**Opens the user's image library to select images.
