@@ -29,6 +29,8 @@ const Products = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  //fetchProductData
+
     return (
         <View style={{ flex: 1 }}>
         <FlatList
