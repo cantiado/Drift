@@ -6,8 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
 import MessagesScreen from "../screens/SavedScreen";
-import ItemUploadScreen from "../screens/ItemUploadScreen";
-import UploadScreen from "../screens/UploadScreen";
+import UploadScreen from "../screens/ItemUploadScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ProductScreen from "../screens/ProductScreen";
 import LoginScreen from "../screens/LoginScreen";
@@ -78,18 +77,6 @@ const HomeTabNavStack = ({navigation}) => {
                 tabBarIcon: ({ color, size }) => (
                   <Icon
                     name="envelope"
-                    size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Item Upload"
-              component={ItemUploadScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="plus"
                     size={size} color={color}
                   />
                 ),
