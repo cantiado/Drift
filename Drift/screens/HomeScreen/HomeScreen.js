@@ -14,13 +14,6 @@ const HomeScreen = ({ navigation }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
 
   useEffect(() => {
-    setTimeout(() => {
-        navigation.navigate('Product');
-        console.log(navigation);
-    }, 5000);
-}, []);
-
-  useEffect(() => {
     //fetch data based on searchQuery
   }, [searchQuery]);
 
@@ -36,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
         <IconButton
           icon="basket"
           size={20}
-          onPress={() => console.log("Pressed")}
+          onPress={() => {navigation.navigate('Cart')}}
         />
       </Appbar.Header>
       {searchQuery === '' ? <Categories setSearchQuery = {setSearchQuery}/> : <Products navigation={navigation}/>}
