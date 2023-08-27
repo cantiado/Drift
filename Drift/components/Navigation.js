@@ -5,7 +5,6 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
-import MessagesScreen from "../screens/SavedScreen";
 import UploadScreen from "../screens/ItemUploadScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ProductScreen from "../screens/ProductScreen";
@@ -89,18 +88,6 @@ const HomeTabNavStack = ({navigation}) => {
                   <Icon
                     name="star"
                     //size={size} color={color}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Messages"
-              component={MessagesScreen}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Icon
-                    name="envelope"
-                    size={size} color={color}
                   />
                 ),
               }}
