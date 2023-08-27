@@ -23,7 +23,7 @@ const Products = ({ navigation }) => {
           style={{ width: '100%', height: 100 }}
     resizeMode="cover"
         />
-        <Text>Size: M Price $50</Text>
+        <Text>{`Size: ${item.size} Price ${item.price}`}</Text>
         </Card.Content>
       </Card>
     </TouchableOpacity>
