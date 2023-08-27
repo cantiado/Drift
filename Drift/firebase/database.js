@@ -7,6 +7,10 @@ import {
   getDoc,
   updateDoc,
   deleteDoc,
+  arrayUnion,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { uploadImage } from "./filestorage";
 
@@ -69,6 +73,9 @@ export async function createUser(uid, email, first, last) {
       email,
       first,
       last,
+      items: [],
+      saved: [],
+      cart: [],
     });
     console.log(`Created new user with uid: ${uid}`);
     return true;
@@ -94,7 +101,8 @@ export async function getUserData(uid) {
   return docSnap.data();
 }
 
-/**Attempts to create new item in `items` collection.
+/**Attempts to create new item in `items` collection
+ * and adds the new item to the owner's items.
  *
  * @param {string} owner The unique ID of the user who owns the item.
  * @param {string} name The name of the item.
@@ -159,6 +167,7 @@ export async function createItem(
       otherTags,
       upload: new Date(),
     });
+
     let imgURLs = [];
     let index = 0;
     for (const uri of imgURIs) {
@@ -170,8 +179,44 @@ export async function createItem(
       imgURLs.push(url);
       index++;
     }
+
     await updateDoc(itemRef, { images: imgURLs });
+    await updateDoc(doc(db, "users", owner), { items: arrayUnion(itemRef.id) });
     console.log(`Created new item with uid: ${itemRef.id}`);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+  return true;
+}
+
+/**Add an item to a user's saved items.
+ *
+ * @param {string} user The user's unique ID.
+ * @param {string} item The item's unique ID.
+ * @returns True on success and false on fail.
+ */
+export async function addSavedItem(user, item) {
+  const userRef = doc(db, "users", user);
+  try {
+    await updateDoc(userRef, { saved: arrayUnion(item) });
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+  return true;
+}
+
+/**Add an item to a user's cart.
+ *
+ * @param {string} user The user's unique ID.
+ * @param {string} item The item's unique ID.
+ * @returns True on success and false on fail.
+ */
+export async function addCartItem(user, item) {
+  const userRef = doc(db, "users", user);
+  try {
+    await updateDoc(userRef, { cart: arrayUnion(item) });
   } catch (error) {
     console.error(error);
     return false;
@@ -181,7 +226,7 @@ export async function createItem(
 
 /**Gets an item's data from the `items` collection.
  *
- * @param {string} uid The user's unique ID.
+ * @param {string} uid The item's unique ID.
  * @returns The user's data on successful retrieval and null otherwise.
  */
 export async function getItemData(uid) {
@@ -193,6 +238,41 @@ export async function getItemData(uid) {
   }
   if (docSnap === null || !docSnap.exists()) return null;
   return docSnap.data();
+}
+
+/**Gets all items of a certain type.
+ *
+ * @param {number} type The type of clothing of the item.
+ * - 0: Tops,
+ * - 1: Bottoms,
+ * - 2: Dresses,
+ * - 3: Coats and Jackets,
+ * - 4: Jumpsuits and Rompers,
+ * - 5: Suits,
+ * - 6: Footwear,
+ * - 7: Accessories,
+ * - 8: Sleepwear,
+ * - 9: Underwear,
+ * - 10: Swimwear,
+ * - 11: Costume,
+ * @returns An array of item data on success and null otherwise.
+ */
+export async function getItemsByType(type) {
+  if (!isValidType(type)) {
+    console.error("Cannot get items of an invalid type!");
+    return null;
+  }
+  const typeName = ITEM_TYPE_VAL2TITLE[type];
+  const itemsRef = collection(db, "items");
+  const q = query(itemsRef, where("type", "==", typeName));
+  let querySnap = null;
+  try {
+    querySnap = await getDocs(q);
+  } catch (error) {
+    console.error(error);
+  }
+  if (querySnap === null || !querySnap.exists()) return null;
+  return querySnap.docs.map((doc) => doc.data());
 }
 
 /**Checks if the user exists.
@@ -245,25 +325,25 @@ export function isValidQuality(quality) {
 /**Checks if the item size is a valid category or a number.
  *
  * @param {string | number} size The item's size
- * @returns
+ * @returns True if the size is in the valid letter sizes or a number and false otherwise.
  */
 export function isValidSize(size) {
   return size in ITEM_SIZE_CATEGORIES || !isNaN(size);
 }
 
-/**
+/**Checks if the demographic value is valid
  *
- * @param {number} demog
- * @returns
+ * @param {number} demog The value for the demographic
+ * @returns True if valid and false otherwise
  */
 export function isValidDemographic(demog) {
   return demog in ITEM_DEMOGRAPHIC_VAL2TITLE;
 }
 
-/**
+/**Checks if the given value matches a clothing type.
  *
- * @param {number} type
- * @returns
+ * @param {number} type The value for clothing type.
+ * @returns True if valid and false otherwise.
  */
 export function isValidType(type) {
   return type in ITEM_TYPE_VAL2TITLE;
