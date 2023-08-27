@@ -1,23 +1,29 @@
 import * as React from "react";
-import { SafeAreaView } from 'react-native';
-import { SegmentedButtons, Text } from 'react-native-paper';
+import DropDown from "react-native-paper-dropdown";
 
 const ItemDemographicInput = () => {
-  const [value, setValue] = React.useState('');
+  const [itemCategory, setItemCategory] = React.useState("");
+  const [showDropDown, setShowDropDown] = React.useState(false);
+  const categoryList = [
+    { value: 'Women', label: 'Women', },
+    { value: 'Men', label: 'Men', },
+    { value: 'Children', label: 'Children' },
+    { value: 'Unisex', label: 'Unisex' },
+    { value: 'Anything', label: 'Anything' },
+   ];
 
-  return (
-      <SegmentedButtons
-        value={value}
-        onValueChange={setValue}
-        buttons={[
-          { value: 'Women', label: 'Women', },
-          { value: 'Men', label: 'Men', },
-          { value: 'Children', label: 'Children' },
-          { value: 'Unisex', label: 'Unisex' },
-          { value: 'Anything', label: 'Anything' },
-        ]}
-      />
-  );
+    return(
+        <DropDown
+              label={"Item Category"}
+              mode={"outlined"}
+              visible={showDropDown}
+              showDropDown={() => setShowDropDown(true)}
+              onDismiss={() => setShowDropDown(false)}
+              value={itemCategory}
+              setValue={setItemCategory}
+              list={categoryList} 
+        />
+    )
 };
 
 

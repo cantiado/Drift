@@ -8,8 +8,9 @@ const ItemNameInput = () => {
             label="Item Name"
             value={itemName}
             mode="outlined"
+            maxLength={70}
             onChangeText={itemName => setItemName(itemName)}       
-        />   
+        />
     )
 }
 export {ItemNameInput};

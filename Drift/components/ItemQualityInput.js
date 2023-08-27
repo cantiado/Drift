@@ -1,24 +1,32 @@
 import * as React from "react";
-import { SafeAreaView } from 'react-native';
-import { SegmentedButtons, Text } from 'react-native-paper';
+import DropDown from "react-native-paper-dropdown";
 
 const ItemQualityInput = () => {
-  const [value, setValue] = React.useState('');
+  const [itemQuality, setItemQuality] = React.useState("");
+    const [showDropDown, setShowDropDown] = React.useState(false);
+    const qualityList = [
+      { value: 'Used - Fair', label: 'Fair', },
+      { value: 'Used - Good', label: 'Good', },
+      { value: 'Used - Excellent', label: 'Excellent' },
+      { value: 'Like New', label: 'Like New' },
+      { value: 'Brand New', label: 'Brand New' },
+        
+        
+    ];
 
-  return (
-      <SegmentedButtons
-        value={value}
-        onValueChange={setValue}
-        buttons={[
-          { value: 'Used - Fair', label: 'Fair', },
-          { value: 'Used - Good', label: 'Good', },
-          { value: 'Used - Excellent', label: 'Excellent' },
-          { value: 'Like New', label: 'Like New' },
-          { value: 'Brand New', label: 'Brand New' },
-        ]}
-      />
-  );
+    return(
+        <DropDown
+              label={"Item Quality"}
+              mode={"outlined"}
+              visible={showDropDown}
+              showDropDown={() => setShowDropDown(true)}
+              onDismiss={() => setShowDropDown(false)}
+              value={itemQuality}
+              setValue={setItemQuality}
+              list={qualityList}
+              
+        />
+    )
 };
-
 
 export {ItemQualityInput};

@@ -8,6 +8,7 @@ const ItemDescriptionInput = () => {
             label="Item Description"
             value={itemDescription}
             mode="outlined"
+            maxLength={1000}
             multiline={true}
             style={{height:100}}
             onChangeText={itemDescription => setItemDescription(itemDescription)}       

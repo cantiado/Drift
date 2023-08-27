@@ -23,7 +23,7 @@ const ItemTypeInput = () => {
 
     return(
         <DropDown
-              label={"Item type"}
+              label={"Item Type"}
               mode={"outlined"}
               visible={showDropDown}
               showDropDown={() => setShowDropDown(true)}
