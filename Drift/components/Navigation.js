@@ -10,7 +10,9 @@ import UploadScreen from "../screens/ItemUploadScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ProductScreen from "../screens/ProductScreen";
 import LoginScreen from "../screens/LoginScreen";
+import CartScreen from "../screens/CartScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { IconButton} from "react-native-paper";
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -24,7 +26,28 @@ const AppNavStack =  ({ navigation }) => {
           component={HomeTabNavStack}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen 
+          name="Product" 
+          component={ProductScreen} 
+          options={{
+            headerRight: () => (
+              <IconButton
+                icon="basket"
+                size={20}
+                onPress={() => {navigation.navigate('Cart')}}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen name="Cart" component={CartScreen} options={{
+            headerRight: () => (
+              <IconButton
+                icon="pen"
+                size={20}
+                onPress={() => {navigation.navigate('Cart')}}
+              />
+            ),
+          }}/>
         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </PaperProvider>
