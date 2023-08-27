@@ -262,16 +262,15 @@ export async function getItemsByType(type) {
     console.error("Cannot get items of an invalid type!");
     return null;
   }
-  const typeName = ITEM_TYPE_VAL2TITLE[type];
   const itemsRef = collection(db, "items");
-  const q = query(itemsRef, where("type", "==", typeName));
+  const q = query(itemsRef, where("type", "==", type));
   let querySnap = null;
   try {
     querySnap = await getDocs(q);
   } catch (error) {
     console.error(error);
   }
-  if (querySnap === null || !querySnap.exists()) return null;
+  if (querySnap === null) return null;
   return querySnap.docs.map((doc) => doc.data());
 }
 
