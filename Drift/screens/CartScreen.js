@@ -4,9 +4,9 @@ import { IconButton,Card, Title} from "react-native-paper";
 
 
 const cartItems = [
-  { id: "1", title: "Shirts", image: require('./pantsExample.jpg')},
-  { id: "2", title: "Pants", image: require('./pantsExample.jpg') },
-  { id: "3", title: "Shoes", image: require('./pantsExample.jpg')},
+  { id: "1", title: "Shirts", image: require('./pantsExample.jpg'), size: "M", price: "$50"},
+  { id: "2", title: "Pants", image: require('./pantsExample.jpg'), size: "M", price: "$50" },
+  { id: "3", title: "Shoes", image: require('./pantsExample.jpg'), size: "M", price: "$50"},
   // Add more items as needed
 ];
 
@@ -21,7 +21,7 @@ const CartScreen = ({ navigation }) => {
           style={{ width: '100%', height: 100 }}
     resizeMode="cover"
         />
-        <Text>Size: M Price $50</Text>
+        <Text>{`Size: ${item.size} Price ${item.price}`}</Text>
         </Card.Content>
       </Card>
       );
