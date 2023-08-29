@@ -15,8 +15,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const ItemUploadScreen = () => {
     //const [searchQuery, setSearchQuery] = React.useState("");
     const [itemName, setItemName] = React.useState("");
-
-  
   
     return (
       <ScrollView>
