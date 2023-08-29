@@ -28,7 +28,7 @@ const ProductScreen = ({ navigation, route }) => {
     console.log("Save");
     addSavedItem(user, productItem.id);
   };
-  const handleADDCartItem = () => {
+  const handleAddCartItem = () => {
     console.log("Buy");
     addCartItem(user, productItem.id);
   };
@@ -62,7 +62,7 @@ const ProductScreen = ({ navigation, route }) => {
         <Card.Actions>
           <Button onPress={() => console.log("More")}>More from {owner}</Button>
           <Button onPress={handleAddSaveItem}>Save</Button>
-          <Button onPress={handleADDCartItem}>Buy</Button>
+          <Button onPress={handleAddCartItem}>Buy</Button>
         </Card.Actions>
       </Card>
     </View>
