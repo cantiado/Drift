@@ -230,7 +230,7 @@ export async function createItem(
 export async function addSavedItem(user, item) {
   const userRef = doc(db, "users", user);
   try {
-    await updateDoc(userRef, { saved: arrayUnion(item) });
+    await updateDoc(userRef, { saved: arrayUnion([item]) });
   } catch (error) {
     console.error(error);
     return false;
@@ -247,7 +247,7 @@ export async function addSavedItem(user, item) {
 export async function addCartItem(user, item) {
   const userRef = doc(db, "users", user);
   try {
-    await updateDoc(userRef, { cart: arrayUnion(item) });
+    await updateDoc(userRef, { cart: arrayUnion([item]) });
   } catch (error) {
     console.error(error);
     return false;
