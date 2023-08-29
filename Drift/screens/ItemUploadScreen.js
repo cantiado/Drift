@@ -9,14 +9,13 @@ import { createItem, isValidPrice, isValidQuality, isValidSize, isValidType, isV
 const ItemUploadScreen = () => {
     //const [searchQuery, setSearchQuery] = React.useState("");
     const [itemName, setItemName] = React.useState("");
-    const [itemImages, setItemImages] = React.useState("");
+    const [itemImages, setItemImages] = React.useState([]);
     const [itemPrice, setItemPrice] = React.useState("");
     const [itemDescription, setItemDescription] = React.useState("");
     const [itemQuality, setItemQuality] = React.useState("");
-    
-    const [showQualityDropDown, setQualityShowDropDown] = React.useState(false);
-    const [showDropDown, setShowDropDown] = React.useState(false);
+    const [showQualityDropDown, setShowQualityDropDown] = React.useState(false);
     const qualityList = [
+      { value: '', label: 'Please select an option'},
       { value: 'Used - Fair', label: 'Fair', },
       { value: 'Used - Good', label: 'Good', },
       { value: 'Used - Excellent', label: 'Excellent' },
@@ -26,8 +25,9 @@ const ItemUploadScreen = () => {
     const [itemSize, setItemSize] = React.useState("");
     const [itemBrand, setItemBrand] = React.useState("");
     const [itemType, setItemType] = React.useState("");
-    //const [showTypeDropDown, setTypeDropDown] = React.useState(false);
+    const [showTypeDropDown, setShowTypeDropDown] = React.useState(false);
     const clothingList = [
+        { value: '', label: 'Please select an option'},
         { label: "Tops", value: "Tops",},
         { label: "Bottoms", value: "Bottoms",},
         { label: "Dresses", value: "Dresses",},
@@ -42,34 +42,66 @@ const ItemUploadScreen = () => {
         { label: "Costume", value: "Costume",}, 
     ];
     const [itemCategory, setItemCategory] = React.useState("");
-    //const [showCategoryDropDown, setCategoryDropDown] = React.useState(false);
+    const [showCategoryDropDown, setShowCategoryDropDown] = React.useState(false);
     const categoryList = [
+      { value: '', label: 'Please select an option'},
       { value: 'Women', label: 'Women', },
       { value: 'Men', label: 'Men', },
       { value: 'Children', label: 'Children' },
       { value: 'Unisex', label: 'Unisex' },
       { value: 'Anything', label: 'Anything' },
      ];
+
+     const ITEM_TYPE_TITLE2VAL = {
+      "Tops" : 0,
+      "Bottoms" : 1,
+      "Dresses" : 2,
+      "Coats and Jackets" : 3,
+      "Jumpsuits and Rompers" : 4,
+      "Suits" : 5,
+      "Footwear" : 6,
+      "Accessories" : 7,
+      "Sleepwear" : 8,
+      "Underwear" : 9,
+      "Swimwear" : 10,
+      "Costume" : 11,
+    };
+
+    const ITEM_DEMOGRAPHIC_TITLE2VAL = {
+      "Men" : 0,
+      "Women" :  1,
+      "Children" : 2,
+      "Unisex" : 3,
+      "Anything" : 4,
+    };
+    
+    const ITEM_QUALITY_TITLE2VAL = {
+      "Brand New" : 0,
+      "Like New" : 1,
+      "Used - Excellent" : 2,
+      "Used - Good" : 3,
+      "Used - Fair" : 4,
+    };
   
      const isValidFormInput = () => {
         if (!isValidPrice(itemPrice)){
           alert('Error: Item price must be at least $0.00.')
           return false;
         }
-        if (!isValidSize(itemSize)){
-          alert('Error: Invalid item size. Please enter a letter size or a numeric size.')
-          return false;
-        }
+        // if (!isValidSize(itemSize)){
+        //   alert('Error: Invalid item size. Please enter an uppercase letter size or a numeric size.')
+        //   return false;
+        // }
         
-        if (!isValidQuality(itemQuality)){
+        if (!isValidQuality(ITEM_QUALITY_TITLE2VAL[itemQuality])){
           alert('Invalid quality input, please select a valid option from the dropdown list.')
           return false;
         }
-        if (!isValidType(itemType)){
+        if (!isValidType(ITEM_TYPE_TITLE2VAL[itemType])){
           alert('Invalid item type input, please select a valid option from the dropdown list.')
           return false;
         }
-        if (!isValidDemographic(itemCategory)){
+        if (!isValidDemographic(ITEM_QUALITY_TITLE2VAL[itemQuality])){
           alert('Invalid item category input, please select a valid option from the dropdown list.')
           return false;
         }
@@ -78,8 +110,8 @@ const ItemUploadScreen = () => {
      
      const clearForm = () => {
       setItemName("");
-      setItemImages("")
-      setPrice("");
+      setItemImages([])
+      setItemPrice("");
       setItemDescription("");
       setItemQuality("");
       setItemSize("");
@@ -90,7 +122,8 @@ const ItemUploadScreen = () => {
 
      const handleFormSubmit = async () => {
       if (isValidFormInput()){
-        if (await createItem(getCurrentUserUID(), itemName, itemPrice, itemDescription, itemType, itemQuality, itemSize, itemCategory, itemImages, itemBrand)){
+        let success = await createItem(getCurrentUserUID(), itemName, itemPrice, itemDescription, ITEM_TYPE_TITLE2VAL[itemType], ITEM_QUALITY_TITLE2VAL[itemQuality], itemSize, ITEM_DEMOGRAPHIC_TITLE2VAL[itemCategory], itemImages, itemBrand);
+        if (success){
           clearForm();
         } else{
           alert('Error: Something went wrong and item was not uploaded. Please try again.');
@@ -116,9 +149,9 @@ const ItemUploadScreen = () => {
             mode="contained"
             iconColor={MD3Colors.primary50}
             size={20}
-            onPress={() => {
+            onPress={ async () => {
                 console.log('Pressed image upload')
-                setItemImages(getImagesFromLibrary());
+                setItemImages( await getImagesFromLibrary());
               }
             }
         />
@@ -144,8 +177,8 @@ const ItemUploadScreen = () => {
               label={"Item Quality"}
               mode={"outlined"}
               visible={showQualityDropDown}
-              showQualityDropDown={() => setQualityShowDropDown(true)}
-              onDismiss={() => setQualityShowDropDown(false)}
+              showDropDown={() => setShowQualityDropDown(true)}
+              onDismiss={() => setShowQualityDropDown(false)}
               value={itemQuality}
               setValue={setItemQuality}
               list={qualityList}
@@ -167,9 +200,9 @@ const ItemUploadScreen = () => {
         <DropDown
               label={"Item Type"}
               mode={"outlined"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
+              visible={showTypeDropDown}
+              showDropDown={() => setShowTypeDropDown(true)}
+              onDismiss={() => setShowTypeDropDown(false)}
               value={itemType}
               setValue={setItemType}
               list={clothingList}
@@ -179,9 +212,9 @@ const ItemUploadScreen = () => {
         <DropDown
               label={"Item Category"}
               mode={"outlined"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
+              visible={showCategoryDropDown}
+              showDropDown={() => setShowCategoryDropDown(true)}
+              onDismiss={() => setShowCategoryDropDown(false)}
               value={itemCategory}
               setValue={setItemCategory}
               list={categoryList} 
