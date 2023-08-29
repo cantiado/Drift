@@ -11,7 +11,7 @@ const Products = ({ query, navigation }) => {
         navigation.navigate("Product", { item });
       }}
     >
-      <Card style={{ margin: 1, padding: 0 }} elevation={0}>
+      <Card style={{ width: '50%', margin: 1, padding: 0 }} elevation={0}>
         <Card.Content style={{ padding: 0 }}>
           <Image
             source={{
