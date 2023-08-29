@@ -283,9 +283,24 @@ export async function addCartItem(user, item) {
  */
 export async function removeCartItem(user, item) {
   const userRef = doc(db, "users", user);
-  console.log("TEST", item);
   try {
     await updateDoc(userRef, { cart: arrayRemove(item) });
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+  return true;
+}
+
+/**Marks an item as sold on the database.
+ * 
+ * @param {string} item The item ID.
+ * @returns True on success and false otherwise.
+ */
+export async function buyItem(item) {
+  const itemRef = doc(db, "items", item);
+  try {
+    await updateDoc(itemRef, { sold: true });
   } catch (error) {
     console.error(error);
     return false;
