@@ -1,12 +1,11 @@
 import { Searchbar } from "react-native-paper";
 import { Appbar } from "react-native-paper";
 import * as React from "react";
-import { useState, useEffect } from 'react';
-import { View, FlatList, Image} from "react-native";
-import { IconButton,Card, Title} from "react-native-paper";
+import { useState, useEffect } from "react";
+import { View, FlatList, Image } from "react-native";
+import { IconButton, Card, Title } from "react-native-paper";
 import Categories from "./Categories";
 import Products from "./Products";
-
 
 const HomeScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -29,10 +28,16 @@ const HomeScreen = ({ navigation }) => {
         <IconButton
           icon="basket"
           size={20}
-          onPress={() => {navigation.navigate('Cart')}}
+          onPress={() => {
+            navigation.navigate("Cart");
+          }}
         />
       </Appbar.Header>
-      {searchQuery === '' ? <Categories setSearchQuery = {setSearchQuery}/> : <Products navigation={navigation}/>}
+      {searchQuery === "" ? (
+        <Categories setSearchQuery={setSearchQuery} />
+      ) : (
+        <Products query={searchQuery} navigation={navigation} />
+      )}
     </View>
   );
 };
