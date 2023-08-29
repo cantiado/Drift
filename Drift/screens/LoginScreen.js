@@ -22,7 +22,7 @@ const LoginScreen = ({navigation}) => {
     },
     centeredView: {
       flex: 1,
-      paddingHorizontal: '30%', 
+      paddingHorizontal: '20%', 
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -64,7 +64,6 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <ImageBackground source={require('./login_bg.png')} style={styles.container}>
-    <View>
       <Text variant="headlineSmall">Thrift with</Text>    
       <Text variant="displayLarge" 
       style={{ fontFamily: theme.logo.font, color: theme.logo.color }}
@@ -119,9 +118,6 @@ const LoginScreen = ({navigation}) => {
         }>
           Dev
       </Button>
-      
-
-    </View>
     </ImageBackground>
   );
 };
