@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet,ImageBackground } from 'react-native';
 import { Provider as PaperProvider } from "react-native-paper";
-import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+//import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
@@ -12,6 +12,8 @@ import LoginScreen from "../screens/LoginScreen";
 import CartScreen from "../screens/CartScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { IconButton} from "react-native-paper";
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -43,11 +45,12 @@ const AppNavStack =  ({ navigation }) => {
               <IconButton
                 icon="pen"
                 size={20}
-                onPress={() => {navigation.navigate('Cart')}}
               />
             ),
           }}/>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} 
+          options={{ headerShown: false }} 
+        />
       </Stack.Navigator>
     </PaperProvider>
   );
@@ -55,7 +58,21 @@ const AppNavStack =  ({ navigation }) => {
 
 const HomeTabNavStack = ({navigation}) => {
     return (
-        <Tab.Navigator initialRouteName="Home">
+            <Tab.Navigator 
+        
+        
+        initialRouteName="Home"
+        shifting={true}
+        sceneAnimationEnabled={false}
+        barStyle={{
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          borderTopWidth: 0,
+          overflow: 'hidden',
+          elevation: 0,
+          paddingBottom: 5, // Or any desired height
+        }}
+        >
             <Tab.Screen
               name="Home"
               component={HomeScreen}
@@ -107,5 +124,15 @@ const HomeTabNavStack = ({navigation}) => {
           </Tab.Navigator>
     );
   };
-  
+
   export default AppNavStack;
+
+  const styles = StyleSheet.create({
+    bottomImage: {
+      flex: 1,
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover',
+    }
+  });
+  

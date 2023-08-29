@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import  { useContext } from 'react';
+import { View, ImageBackground, StyleSheet } from 'react-native';
 import { Text, TextInput, Button, Appbar } from 'react-native-paper';
 import { registerUser } from "../firebase/authentication";
-
+import ThemeContext from '../assets/theme';
 
 const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
@@ -11,7 +12,25 @@ const SignupScreen = ({navigation}) => {
   const [confirmEmail, setConfirmEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const theme = useContext(ThemeContext);
   let code = 0; //Code will be used with the registerUser API function to determine if the user can successfully sign up or if there are errors
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.lightBlue,
+      resizeMode: "cover",
+      paddingVertical: '30%', 
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    centeredView: {
+      flex: 1,
+      paddingHorizontal: '30%', 
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
 
   const isValidFormInput = () => {
     if (!firstName) {
@@ -28,10 +47,6 @@ const SignupScreen = ({navigation}) => {
     }
     if (!confirmEmail) {
       alert('Please re-enter your email');
-      return false;
-    }
-    if(email !== confirmEmail) {
-      alert('Emails do not match, please ensure they match');
       return false;
     }
     if (!password) {
@@ -90,33 +105,36 @@ const SignupScreen = ({navigation}) => {
   }
 
   return (
-    <View>
-      <Appbar.Header>
-        <Text variant="displayMedium">Thrift with Drift</Text>
-      </Appbar.Header>
-
+    
+      <ImageBackground source={require('./clouds.png')} style={styles.container}>
+    
+      <Text variant="headlSmall">Thrift with</Text>    
+      <Text variant="displayLarge" style={{ fontFamily: theme.logo.font, color: theme.logo.color }}
+      >Drift</Text>   
+   
+      <View style={styles.centeredView}>
       <TextInput
         label="First name"
         value={firstName}
         onChangeText={firstName => setfirstName(firstName)}
+        mode="outlined"
+        style={{ borderRadius: 25, width: '100%' }}
       />
 
       <TextInput
         label="Last name"
         value={lastName}
         onChangeText={lastName => setlastName(lastName)}
+        mode="outlined"
+        style={{ borderRadius: 25, width: '100%' }}
       />
 
       <TextInput
         label="Email"
         value={email}
         onChangeText={email => setEmail(email)}
-      />
-
-      <TextInput
-        label="Confirm email"
-        value={confirmEmail}
-        onChangeText={confirmEmail => setConfirmEmail(confirmEmail)}
+        mode="outlined"
+        style={{ borderRadius: 25, width: '100%' }}
       />
 
       <TextInput
@@ -124,6 +142,8 @@ const SignupScreen = ({navigation}) => {
         secureTextEntry={true}
         value={password}
         onChangeText={password => setPassword(password)}
+        mode="outlined"
+        style={{ borderRadius: 25, width: '100%' }}
       />
 
       <TextInput
@@ -131,15 +151,20 @@ const SignupScreen = ({navigation}) => {
         secureTextEntry={true}
         value={confirmPassword}
         onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
+        mode="outlined"
+        style={{ borderRadius: 25, width: '100%' }}
       />
 
       <Button mode="elevated" 
           onPress={ () => {
             handleSignUp();
           }
-        }>
+        }
+        style={{ width: '100%' }}
+        >
         Sign up
        </Button>
+       
        
       <Button 
         onPress={() => {
@@ -148,9 +173,10 @@ const SignupScreen = ({navigation}) => {
         }>
         Already have an account? Log in here
       </Button>
-
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
+
 
 export default SignupScreen;
