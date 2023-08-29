@@ -70,7 +70,7 @@ const CartScreen = ({ navigation }) => {
   //fetch user's cart
   const [items, setItems] = React.useState([]);
   getUserData(getCurrentUserUID())
-    .then((user) => getManyItemData(user.cart))
+    .then((user) => getManyItemData(user.cart, 0))
     .then((items) => setItems(items));
   return (
     <View style={{ flex: 1 }}>

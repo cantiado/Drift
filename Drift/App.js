@@ -7,21 +7,34 @@ import ThemeContext, { theme } from "./assets/theme";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import DriftNavigation from "./components/Navigation";
-import React, { createContext } from 'react';
+import React, { createContext } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useFonts } from "expo-font";
 
 const Stack = createStackNavigator();
 const AuthFlow = () => {
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
 
 export default function App() {
+  const [loaded] = useFonts({
+    "CherryBombOne-Regular": require("./assets/fonts/CherryBombOne-Regular.ttf"),
+  });
+  if (!loaded) return null;
   return (
     <ThemeContext.Provider value={theme}>
       <PaperProvider>
