@@ -25,6 +25,13 @@ const ITEM_QUALITY_VAL2TITLE = {
   3: "Used - Good",
   4: "Used - Fair",
 };
+const ITEM_QUALITY_TITLE2VAL = {
+  "BRAND NEW": 0,
+  "LIKE NEW": 1,
+  "USED - EXCELLENT": 2,
+  "USED - GOOD": 3,
+  "USED - FAIR": 4,
+};
 
 const ITEM_TYPE_VAL2TITLE = {
   0: "Tops",
@@ -40,6 +47,22 @@ const ITEM_TYPE_VAL2TITLE = {
   10: "Swimwear",
   11: "Costume",
 };
+const ITEM_TYPE_TITLE2VAL = {
+  TOPS: 0,
+  BOTTOMS: 1,
+  DRESSES: 2,
+  "COATS AND JACKETS": 3,
+  "COATS & JACKETS": 3,
+  "JUMPSUITS AND ROMPERS": 4,
+  "JUMPSUITS & ROMPERS": 4,
+  SUITS: 5,
+  FOOTWEAR: 6,
+  ACCESSORIES: 7,
+  SLEEPWEAR: 8,
+  UNDERWEAR: 9,
+  SWIMWEAR: 10,
+  COSTUME: 11,
+};
 
 const ITEM_DEMOGRAPHIC_VAL2TITLE = {
   0: "Men",
@@ -47,6 +70,13 @@ const ITEM_DEMOGRAPHIC_VAL2TITLE = {
   2: "Children",
   3: "Unisex",
   4: "Anything",
+};
+const ITEM_DEMOGRAPHIC_TITLE2VAL = {
+  MEN: 0,
+  WOMEN: 1,
+  CHILDREN: 2,
+  UNISEX: 3,
+  ANYTHING: 4,
 };
 
 const ITEM_SIZE_CATEGORIES = new Set([
@@ -154,6 +184,7 @@ export async function createItem(
 ) {
   try {
     const itemRef = await addDoc(collection(db, "items"), {
+      id: "",
       owner,
       name,
       price,
@@ -167,7 +198,7 @@ export async function createItem(
       otherTags,
       upload: new Date(),
     });
-
+    await updateDoc(itemRef, { id: itemRef.id });
     let imgURLs = [];
     let index = 0;
     for (const uri of imgURIs) {
@@ -240,6 +271,24 @@ export async function getItemData(uid) {
   return docSnap.data();
 }
 
+/**Get many items data using their item IDs
+ *
+ * @param {string[]} uids The IDs of the items.
+ * @returns The items' data on success and null otherwise.
+ */
+export async function getManyItemData(uids) {
+  const itemsRef = collection(db, "items");
+  const q = query(itemsRef, where("id", "in", uids));
+  let querySnap = null;
+  try {
+    querySnap = await getDocs(q);
+  } catch (error) {
+    console.error(error);
+  }
+  if (querySnap === null) return null;
+  return querySnap.docs.map((doc) => doc.data());
+}
+
 /**Gets all items of a certain type.
  *
  * @param {number} type The type of clothing of the item.
@@ -262,16 +311,15 @@ export async function getItemsByType(type) {
     console.error("Cannot get items of an invalid type!");
     return null;
   }
-  const typeName = ITEM_TYPE_VAL2TITLE[type];
   const itemsRef = collection(db, "items");
-  const q = query(itemsRef, where("type", "==", typeName));
+  const q = query(itemsRef, where("type", "==", type));
   let querySnap = null;
   try {
     querySnap = await getDocs(q);
   } catch (error) {
     console.error(error);
   }
-  if (querySnap === null || !querySnap.exists()) return null;
+  if (querySnap === null) return null;
   return querySnap.docs.map((doc) => doc.data());
 }
 
@@ -328,7 +376,7 @@ export function isValidQuality(quality) {
  * @returns True if the size is in the valid letter sizes or a number and false otherwise.
  */
 export function isValidSize(size) {
-  return size in ITEM_SIZE_CATEGORIES || !isNaN(size);
+  return ITEM_SIZE_CATEGORIES.has(size.toUpperCase()) || !isNaN(size);
 }
 
 /**Checks if the demographic value is valid
@@ -357,4 +405,69 @@ export function isValidType(type) {
 export function financial(text) {
   const result = Number.parseFloat(text).toFixed(2);
   return result === "NaN" ? NaN : Number.parseFloat(result);
+}
+
+/**Gets the number value corresponding to the item type title.
+ *
+ * @param {string} title The title of the item type.
+ * @returns The number value of the item type or -1 if invalid title.
+ */
+export function getItemTypeValue(title) {
+  title = title.toUpperCase();
+  if (title in ITEM_TYPE_TITLE2VAL) return ITEM_TYPE_TITLE2VAL[title];
+  return -1;
+}
+
+/**Gets the title corresponding to the item type value.
+ *
+ * @param {number} value The value of the item type.
+ * @returns The title for the item type or "" if invalid value
+ */
+export function getItemTypeTitle(value) {
+  if (value in ITEM_TYPE_VAL2TITLE) return ITEM_TYPE_VAL2TITLE[value];
+  return "";
+}
+
+/**Gets the number value corresponding to the item quality title.
+ *
+ * @param {string} title The title of the item quality.
+ * @returns The number value of the item quality or -1 if invalid title.
+ */
+export function getItemQualityValue(title) {
+  title = title.toUpperCase();
+  if (title in ITEM_QUALITY_TITLE2VAL) return ITEM_QUALITY_TITLE2VAL[title];
+  return -1;
+}
+
+/**Gets the title corresponding to the item quality value.
+ *
+ * @param {number} value The value of the item quality.
+ * @returns The title for the item quality or "" if invalid value
+ */
+export function getItemQualityTitle(value) {
+  if (value in ITEM_QUALITY_VAL2TITLE) return ITEM_QUALITY_VAL2TITLE[value];
+  return "";
+}
+
+/**Gets the number value corresponding to the item demographic title.
+ *
+ * @param {string} title The title of the item demographic.
+ * @returns The number value of the item demographic or -1 if invalid title.
+ */
+export function getItemDemographicValue(title) {
+  title = title.toUpperCase();
+  if (title in ITEM_DEMOGRAPHIC_TITLE2VAL)
+    return ITEM_DEMOGRAPHIC_TITLE2VAL[title];
+  return -1;
+}
+
+/**Gets the title corresponding to the item demographic value.
+ *
+ * @param {number} value The value of the item demographic.
+ * @returns The title for the item demographic or "" if invalid value
+ */
+export function getItemDemographicTitle(value) {
+  if (value in ITEM_DEMOGRAPHIC_VAL2TITLE)
+    return ITEM_DEMOGRAPHIC_VAL2TITLE[value];
+  return "";
 }
