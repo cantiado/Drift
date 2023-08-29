@@ -246,8 +246,9 @@ export async function addSavedItem(user, item) {
  */
 export async function addCartItem(user, item) {
   const userRef = doc(db, "users", user);
+  console.log("TEST", item);
   try {
-    await updateDoc(userRef, { cart: arrayUnion([item]) });
+    await updateDoc(userRef, { cart: arrayUnion(item) });
   } catch (error) {
     console.error(error);
     return false;
