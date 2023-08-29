@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet,ImageBackground } from 'react-native';
 import { Provider as PaperProvider } from "react-native-paper";
-//import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+import  { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
@@ -13,12 +13,13 @@ import CartScreen from "../screens/CartScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { IconButton} from "react-native-paper";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
+import ThemeContext from '../assets/theme';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const AppNavStack =  ({ navigation }) => {
+  const theme = useContext(ThemeContext);
   return (
     <PaperProvider>
       <Stack.Navigator initialRouteName="HomeTabs">
@@ -57,19 +58,18 @@ const AppNavStack =  ({ navigation }) => {
 }
 
 const HomeTabNavStack = ({navigation}) => {
+  const theme = useContext(ThemeContext);
     return (
             <Tab.Navigator 
-        
-        
         initialRouteName="Home"
         shifting={true}
-        sceneAnimationEnabled={false}
+        sceneAnimationEnabled={true}
         barStyle={{
-          backgroundColor: 'transparent',
+          backgroundColor: theme.colors.green,
           position: 'absolute',
           borderTopWidth: 0,
           overflow: 'hidden',
-          elevation: 0,
+          elevation: 1,
           paddingBottom: 5, // Or any desired height
         }}
         >
@@ -77,10 +77,11 @@ const HomeTabNavStack = ({navigation}) => {
               name="Home"
               component={HomeScreen}
               options={{
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: () => (
                   <Icon
                     name="home"
-                    //size={size} color={color}
+                    size={theme.navigationIcons.size}
+                    color={theme.colors.white}
                   />
                 ),
               }}
@@ -89,10 +90,11 @@ const HomeTabNavStack = ({navigation}) => {
               name="Upload"
               component={UploadScreen}
               options={{
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: () => (
                   <Icon
                     name="plus"
-                    //size={size} color={color}
+                    size={theme.navigationIcons.size}
+                    color={theme.colors.white}
                   />
                 ),
               }}
@@ -101,10 +103,11 @@ const HomeTabNavStack = ({navigation}) => {
               name="Saved"
               component={SavedScreen}
               options={{
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: () => (
                   <Icon
                     name="star"
-                    //size={size} color={color}
+                    size={theme.navigationIcons.size}
+                    color={theme.colors.white}
                   />
                 ),
               }}
@@ -113,10 +116,11 @@ const HomeTabNavStack = ({navigation}) => {
               name="Profile"
               component={ProfileScreen}
               options={{
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: () => (
                   <Icon
                     name="user"
-                    size={size} color={color}
+                    size={theme.navigationIcons.size}
+                    color={theme.colors.white}
                   />
                 ),
               }}
