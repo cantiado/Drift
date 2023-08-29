@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
+  arrayRemove,
   query,
   where,
   getDocs,
@@ -196,6 +197,7 @@ export async function createItem(
       images: [],
       brand,
       otherTags,
+      sold: false,
       upload: new Date(),
     });
     await updateDoc(itemRef, { id: itemRef.id });
@@ -230,7 +232,24 @@ export async function createItem(
 export async function addSavedItem(user, item) {
   const userRef = doc(db, "users", user);
   try {
-    await updateDoc(userRef, { saved: arrayUnion([item]) });
+    await updateDoc(userRef, { saved: arrayUnion(item) });
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+  return true;
+}
+
+/**Remove an item to a user's saved items.
+ *
+ * @param {string} user The user's unique ID.
+ * @param {string} item The item's unique ID.
+ * @returns True on success and false on fail.
+ */
+export async function removeSavedItem(user, item) {
+  const userRef = doc(db, "users", user);
+  try {
+    await updateDoc(userRef, { saved: arrayRemove(item) });
   } catch (error) {
     console.error(error);
     return false;
@@ -249,6 +268,24 @@ export async function addCartItem(user, item) {
   console.log("TEST", item);
   try {
     await updateDoc(userRef, { cart: arrayUnion(item) });
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+  return true;
+}
+
+/**Removes an item to a user's cart.
+ *
+ * @param {string} user The user's unique ID.
+ * @param {string} item The item's unique ID.
+ * @returns True on success and false on fail.
+ */
+export async function removeCartItem(user, item) {
+  const userRef = doc(db, "users", user);
+  console.log("TEST", item);
+  try {
+    await updateDoc(userRef, { cart: arrayRemove(item) });
   } catch (error) {
     console.error(error);
     return false;
@@ -275,11 +312,31 @@ export async function getItemData(uid) {
 /**Get many items data using their item IDs
  *
  * @param {string[]} uids The IDs of the items.
+ * @param {-1 | 0 | 1} isSold The sold status of the items.
+ * - -1: Both sold and unsold items
+ * - 0: Unsold items only
+ * - 1: Sold items only
  * @returns The items' data on success and null otherwise.
  */
-export async function getManyItemData(uids) {
+export async function getManyItemData(uids, isSold = 0) {
   const itemsRef = collection(db, "items");
-  const q = query(itemsRef, where("id", "in", uids));
+  let q;
+  switch (isSold) {
+    case -1:
+      q = query(itemsRef, where("id", "in", uids));
+      break;
+    case 0:
+    case 1:
+      q = query(
+        itemsRef,
+        where("id", "in", uids),
+        where("sold", "==", isSold === 1)
+      );
+      break;
+    default:
+      console.error("Invalid isSold argument!");
+      return null;
+  }
   let querySnap = null;
   try {
     querySnap = await getDocs(q);
