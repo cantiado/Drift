@@ -76,7 +76,7 @@ const LoginScreen = ({navigation}) => {
         value={email}
         onChangeText={email => setEmail(email)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{ borderRadius: 25, width: '70%', paddingBottom:'5px' }}
       />
 
       <TextInput
@@ -85,7 +85,7 @@ const LoginScreen = ({navigation}) => {
         value={password}
         onChangeText={password => setPassword(password)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{ borderRadius: 25, width: '70%', paddingBottom:'5px' }}
       />
 
       <Button 
@@ -94,7 +94,7 @@ const LoginScreen = ({navigation}) => {
             handleLogIn();
           }
         }
-        style={{ width: '100%' }}
+        style={{ width: '70%', marginTop:'5px' }}
         >
         Log in
       </Button>

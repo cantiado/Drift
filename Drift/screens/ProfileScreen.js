@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { List } from "react-native-paper";
 import { Avatar } from "@rneui/themed";
 import { logOut } from "../firebase/authentication";
-import ProductCard from "../../components/productCard";
+
 
 const ProfileScreen = ({ navigation }) => {
   const [cogDisabled, setCogDisabled] = React.useState(false);
@@ -35,14 +35,14 @@ const ProfileScreen = ({ navigation }) => {
           onPress={handleLogOut}
         />
       </Appbar.Header>
-      <Text>Check out ${owner}'s items!</Text>
-      <FlatList
+      {/* <Text>Check out ${owner}'s items!</Text> */}
+      {/* <FlatList
         data={items}
         renderItem={renderProduct}
         numColumns={3} // Number of columns you want in the grid
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 8 }}
-      />
+      /> */}
     </View>
   );
 };
