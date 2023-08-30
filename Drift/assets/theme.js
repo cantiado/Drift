@@ -10,10 +10,18 @@ const theme = {
     green: "#BAEBAC",
     white: 'white',
   },
+  fonts: {
+    mainFont: 'RedHatDisplay',
+    regularFontSize: 24,
+  },
 
   logo: {
     font: 'CherryBombOne-Regular',
     color: 'white',
+    fontSize: 24,
+    textShadowColor: '#A1D2CF',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
 
   navigationIcons: {
@@ -26,7 +34,21 @@ const theme = {
     resizeMode: 'cover',
     bottom: 0,
     position: 'absolute'
-  }
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#9EF5FF',
+    resizeMode: "cover",
+    paddingVertical: '30%', 
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
+  centeredView: {
+    flex: 1,
+    paddingHorizontal: '30%', 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   
 };

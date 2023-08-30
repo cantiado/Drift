@@ -1,9 +1,18 @@
 import * as React from 'react';
 import  { useContext } from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
-import { Text, TextInput, Button, Appbar } from 'react-native-paper';
+import { View, ImageBackground } from 'react-native';
+import { Text, TextInput, Button, DefaultTheme  } from 'react-native-paper';
 import { registerUser } from "../firebase/authentication";
 import ThemeContext from '../assets/theme';
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#A1D2CF', // Replace 'desiredColor' with your color (e.g., '#FF5733')
+    roundness: 25,
+  },
+};
 
 const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
@@ -12,25 +21,8 @@ const SignupScreen = ({navigation}) => {
   const [confirmEmail, setConfirmEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const theme = useContext(ThemeContext);
+  const appTheme = useContext(ThemeContext);
   let code = 0; //Code will be used with the registerUser API function to determine if the user can successfully sign up or if there are errors
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.lightBlue,
-      resizeMode: "cover",
-      paddingVertical: '30%', 
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    centeredView: {
-      flex: 1,
-      paddingHorizontal: '30%', 
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
 
   const isValidFormInput = () => {
     if (!firstName) {
@@ -106,19 +98,19 @@ const SignupScreen = ({navigation}) => {
 
   return (
     
-      <ImageBackground source={require('./clouds.png')} style={styles.container}>
+      <ImageBackground source={require('./clouds.png')} style={appTheme.container}>
     
       <Text variant="headlineSmall">Thrift with</Text>    
-      <Text variant="displayLarge" style={{ fontFamily: theme.logo.font, color: theme.logo.color }}
+      <Text variant="displayLarge" style={{ fontFamily: appTheme.logo.font, color: appTheme.logo.color }}
       >Drift</Text>   
    
-      <View style={styles.centeredView}>
+      <View style={appTheme.centeredView}>
       <TextInput
         label="First name"
         value={firstName}
         onChangeText={firstName => setfirstName(firstName)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{width: '100%' }}
       />
 
       <TextInput
@@ -126,7 +118,7 @@ const SignupScreen = ({navigation}) => {
         value={lastName}
         onChangeText={lastName => setlastName(lastName)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{width: '100%' }}
       />
 
       <TextInput
@@ -134,7 +126,7 @@ const SignupScreen = ({navigation}) => {
         value={email}
         onChangeText={email => setEmail(email)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{width: '100%' }}
       />
 
       <TextInput
@@ -143,7 +135,7 @@ const SignupScreen = ({navigation}) => {
         value={password}
         onChangeText={password => setPassword(password)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{width: '100%' }}
       />
 
       <TextInput
@@ -152,7 +144,7 @@ const SignupScreen = ({navigation}) => {
         value={confirmPassword}
         onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
         mode="outlined"
-        style={{ borderRadius: 25, width: '100%' }}
+        style={{width: '100%' }}
       />
 
       <Button mode="elevated" 
@@ -160,7 +152,7 @@ const SignupScreen = ({navigation}) => {
             handleSignUp();
           }
         }
-        style={{ width: '100%' }}
+        style={{ backgroundColor: appTheme.colors.yellow, color: white, width: '100%' }}
         >
         Sign up
        </Button>

@@ -1,12 +1,9 @@
 import * as React from "react";
-import {Image, Text, Dimensions } from "react-native";
+import {Image, Text} from "react-native";
 import {Card } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const screenWidth = Dimensions.get("window").width;
-const cardWidth = screenWidth / 2 - 20;
-
-const ProductCard = ({ item, cardWidth }) => {
+const ProductCard = ({ item, cardWidth, showInfo }) => {
   return (
     <TouchableOpacity
       style={{ width: cardWidth }}
@@ -23,7 +20,7 @@ const ProductCard = ({ item, cardWidth }) => {
             style={{ width: "100%", height: 100 }}
             resizeMode="cover"
           />
-          <Text>{`Size: ${item.size} Price ${item.price}`}</Text>
+          {showInfo && <Text>{`Size: ${item.size} Price: ${item.price}`}</Text> }
         </Card.Content>
       </Card>
     </TouchableOpacity>
