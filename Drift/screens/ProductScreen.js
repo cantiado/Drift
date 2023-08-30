@@ -76,7 +76,7 @@ const ProductScreen = ({ navigation, route }) => {
 
         {/* Card Actions */}
         <Card.Actions>
-          <Button style={{backgroundColor:'blue'}} onPress={() => console.log("More")}>More from {owner}</Button>
+          <Button style={{backgroundColor:'blue'}} onPress={() => navigation.navigate("SellerProfileScreen", productItem.owner)}>More from {owner}</Button>
           <Button style={{backgroundColor:'purple'}} onPress={handleAddSaveItem}>Save</Button>
           {productItem.sold ? <Button style={{backgroundColor:'black'}} disabled="true">Sold</Button> : <Button style={{backgroundColor:'white'}} onPress={handleAddCartItem}>Add to cart</Button>}
         </Card.Actions>
