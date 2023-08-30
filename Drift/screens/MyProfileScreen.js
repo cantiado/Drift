@@ -1,11 +1,12 @@
-import * as React from "react";
 import Profile from "../components/Profile";
 import { getCurrentUserUID } from "../firebase/authentication";
+import { logOut } from "../firebase/authentication";
+import ThemeContext from '../assets/theme';
+import React, { useContext } from "react";
 
 const MyProfileScreen = ({ navigation }) => {
   return (
-      <Profile navigation={navigation} userID={getCurrentUserUID()} isMyProfile={true}/>
-     
+    <Profile userID={getCurrentUserUID()} isMyProfile={true}/>
   );
 };
 

@@ -3,7 +3,7 @@ import Profile from "../components/Profile";
 
 const SellerProfileScreen = ({ navigation, sellerID }) => {
   return (
-    <Profile navigation={navigation} userID={sellerID} isMyProfile={false}/>
+    <Profile userID={sellerID} isMyProfile={false}/>
   );
 };
 

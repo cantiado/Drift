@@ -5,15 +5,6 @@ import { Text, TextInput, Button, DefaultTheme  } from 'react-native-paper';
 import { registerUser } from "../firebase/authentication";
 import ThemeContext from '../assets/theme';
 
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#A1D2CF', // Replace 'desiredColor' with your color (e.g., '#FF5733')
-    roundness: 25,
-  },
-};
-
 const SignupScreen = ({navigation}) => {
   const [firstName, setfirstName] = React.useState("");
   const [lastName, setlastName] = React.useState("");
@@ -22,6 +13,14 @@ const SignupScreen = ({navigation}) => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const appTheme = useContext(ThemeContext);
+  const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: appTheme.colors.darkBlue,
+    roundness: 25,
+  },
+};
   let code = 0; //Code will be used with the registerUser API function to determine if the user can successfully sign up or if there are errors
 
   const isValidFormInput = () => {
@@ -100,9 +99,10 @@ const SignupScreen = ({navigation}) => {
     
       <ImageBackground source={require('./clouds.png')} style={appTheme.container}>
     
-      <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: 'white'}}>Thrift with</Text>    
-      <Text variant="displayLarge" style={{ fontFamily: appTheme.logo.font, color: appTheme.logo.color}}
-      >Drift</Text>   
+    <Text variant="headlineMedium" style={{ fontFamily: appTheme.fonts.mainFont, color: 'white', fontWeight: 'bold'}}>Thrift with</Text>    
+      <Text variant="displayLarge" 
+      style={appTheme.logo}
+      >Drift</Text>    
    
       <View style={appTheme.centeredView}>
       <TextInput
@@ -110,6 +110,7 @@ const SignupScreen = ({navigation}) => {
         value={firstName}
         onChangeText={firstName => setfirstName(firstName)}
         mode="outlined"
+        outlineColor={appTheme.colors.gray}
         style={{width: '100%' }}
         theme={theme}
       />
@@ -119,6 +120,7 @@ const SignupScreen = ({navigation}) => {
         value={lastName}
         onChangeText={lastName => setlastName(lastName)}
         mode="outlined"
+        outlineColor={appTheme.colors.gray}
         style={{width: '100%' }}
         theme={theme}
       />
@@ -128,6 +130,7 @@ const SignupScreen = ({navigation}) => {
         value={email}
         onChangeText={email => setEmail(email)}
         mode="outlined"
+        outlineColor={appTheme.colors.gray}
         style={{width: '100%' }}
         theme={theme}
       />
@@ -138,6 +141,7 @@ const SignupScreen = ({navigation}) => {
         value={password}
         onChangeText={password => setPassword(password)}
         mode="outlined"
+        outlineColor={appTheme.colors.gray}
         style={{width: '100%' }}
         theme={theme}
       />
@@ -148,6 +152,7 @@ const SignupScreen = ({navigation}) => {
         value={confirmPassword}
         onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
         mode="outlined"
+        outlineColor={appTheme.colors.gray}
         style={{width: '100%' }}
         theme={theme}
       />
@@ -157,13 +162,19 @@ const SignupScreen = ({navigation}) => {
             handleSignUp();
           }
         }
-        style={{ backgroundColor: appTheme.colors.yellow, color: 'white', width: '100%' }}
+        style={{ backgroundColor: appTheme.colors.lightYellow, color: 'black', width: '100%', marginTop: '5', 
+        shadowColor: appTheme.colors.yellow,         // Shadow color
+        shadowOffset: { width: 5, height: 5 }, // Positioning of the shadow
+        shadowOpacity: 1,        // Opacity of the shadow
+        shadowRadius: 0,            // How blurry the shadow should be
+        elevation: 5, }}
         >
         Sign up
        </Button>
        
        
       <Button 
+        textColor='black'
         onPress={() => {
             navigation.navigate("Login");
           }

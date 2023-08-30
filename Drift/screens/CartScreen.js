@@ -1,10 +1,13 @@
 import * as React from "react";
-import { View, FlatList, Image, Text } from "react-native";
-import { IconButton, Card, Title, MD3Colors, Button } from "react-native-paper";
+import { useContext } from "react";
+import { View, FlatList, Image} from "react-native";
+import { IconButton, Card, Button, Divider} from "react-native-paper";
 import { getManyItemData, getUserData } from "../firebase/database";
 import { getCurrentUserUID } from "../firebase/authentication";
 import { removeCartItem, buyItem } from "../firebase/database";
 import { useCallback } from "react";
+import ThemeContext from '../assets/theme';
+import { ScrollView } from "react-native-gesture-handler";
 
 const cartItems = [
   {
@@ -32,8 +35,9 @@ const cartItems = [
 ];
 
 const CartScreen = ({ navigation }) => {
+  const appTheme = useContext(ThemeContext);
   const renderItems = ({ item }) => (
-    <Card style={{ margin: 1, padding: 0 }} elevation={1}>
+    <Card style={{ margin: 1, padding: 0 }} elevation={0}>
       <Card.Content style={{ flexDirection: 'row', justifyContent: 'flex-start' }} >
         <Image
           source={{
@@ -47,10 +51,11 @@ const CartScreen = ({ navigation }) => {
           <Card.Title 
             title={`${item.name}`}
             subtitle={`Size: ${item.size} Price: $${item.price}`}
-            right={() => <IconButton icon="trash-can-outline" onPress={() => {removeCartItem(getCurrentUserUID(),item.id)}} />}
+            right={() => <IconButton icon="trash-can-outline" color={appTheme.colors.red} onPress={() => {removeCartItem(getCurrentUserUID(),item.id)}} />}
           />
         </Card>
       </Card.Content>
+      <Divider/>
     </Card>
   );
   //fetch user's cart
@@ -68,6 +73,14 @@ const CartScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      <Button 
+        mode="contained"
+        textColor="white"
+        style={{backgroundColor: appTheme.colors.darkBlue, marginTop: '10%'}} 
+        onPress={() => {console.log('Checking out all items'); checkoutAllItems();}}>
+          Checkout - Total: {totalPrice}
+      </Button>
+      <ScrollView>
       <FlatList
         data={items}
         renderItem={renderItems}
@@ -75,12 +88,7 @@ const CartScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 8 }}
       />
-      <Text>{`Total Price: $${totalPrice}`}</Text>
-      <Button 
-        mode="contained" 
-        onPress={() => {console.log('Checking out all items'); checkoutAllItems();}}>
-          Checkout All
-      </Button>
+      </ScrollView>
     </View>
   );
 };
