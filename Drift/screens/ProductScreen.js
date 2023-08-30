@@ -7,7 +7,6 @@ import {
   getItemDemographicTitle,
   getUserData,
   addCartItem,
-  removeSavedItem,
   addSavedItem,
   isSavedItem,
   removeSavedItem,
