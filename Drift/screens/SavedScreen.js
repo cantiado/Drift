@@ -42,10 +42,13 @@ const SavedScreen = () => {
         backgroundColor: appTheme.colors.red,
         paddingTop: "10%",
         paddingBottom: "30%",
+        justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
       },
     ]}>
       <View>
-          <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: appTheme.colors.white}}>your saved</Text>
+          <Text variant="headlineLarge" style={{ fontFamily: appTheme.fonts.mainFont, color: appTheme.colors.white}}>your saved</Text>
           <Text variant="displayLarge" style={appTheme.logo}>Drift</Text>  
         </View>   
       <Divider/>

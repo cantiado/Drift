@@ -76,7 +76,7 @@ const CartScreen = ({ navigation }) => {
       <Button 
         mode="contained"
         textColor="white"
-        style={{backgroundColor: appTheme.colors.darkBlue, marginTop: '10%'}} 
+        style={{backgroundColor: appTheme.colors.darkBlue, marginTop: '7%'}} 
         onPress={() => {console.log('Checking out all items'); checkoutAllItems();}}>
           Checkout - Total: {totalPrice}
       </Button>

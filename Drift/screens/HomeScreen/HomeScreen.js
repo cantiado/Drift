@@ -20,7 +20,12 @@ const HomeScreen = ({ navigation }) => {
   }, [searchQuery]);
 
   return (
-    <View style={appTheme.container}>
+    <View style={[
+      appTheme.container,
+      {
+        paddingTop: "5%",
+      },
+    ]}>
       <Appbar.Header  style={{ backgroundColor: 'transparent' }}>
         <Searchbar
         style={{ flex: 1, backgroundColor: appTheme.colors.lightYellow }}

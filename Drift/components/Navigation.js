@@ -65,11 +65,7 @@ const AppNavStack = ({ navigation }) => {
 
 const HomeTabNavStack = ({ navigation }) => {
   const appTheme = useContext(ThemeContext);
-  const handleLogOut = async () => {    
-    if (await logOut()) {
-      navigation.navigate("Login");
-    }
-  };
+  
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -136,13 +132,6 @@ const HomeTabNavStack = ({ navigation }) => {
               color={appTheme.colors.white}
             />
           ),
-          headerRight: () => (
-            <Button
-          onPress={handleLogOut}
-          title="Sign out"
-          color= {appTheme.colors.darkBlue}
-        /> 
-          )
         })}
       />
     </Tab.Navigator>
