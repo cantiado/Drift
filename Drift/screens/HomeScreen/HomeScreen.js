@@ -7,6 +7,7 @@ import { IconButton, Card, Title } from "react-native-paper";
 import Categories from "./Categories";
 import Products from "./Products";
 import  { useContext } from 'react';
+import ThemeContext from '../../assets/theme';
 
 const HomeScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -40,7 +41,6 @@ const HomeScreen = ({ navigation }) => {
       ) : (
         <Products query={searchQuery} navigation={navigation} />
       )}
-      <Image source={require('../../assets/grass.png')} style={theme.navigationBg} />
     </View>
   );
 };
