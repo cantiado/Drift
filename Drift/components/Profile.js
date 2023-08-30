@@ -5,6 +5,7 @@ import ProductCard from "./ProductCard";
 import { View, FlatList, Text, Dimensions} from "react-native";
 import { getManyItemData, getUserData } from "../firebase/database";
 import { Appbar} from "react-native-paper";
+import ThemeContext from '../assets/theme';
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -14,6 +15,8 @@ const Profile = ({userID, isMyProfile}) => {
 
     const [owner, setOwner] = React.useState("");
     const [items, setItems] = React.useState([]);
+
+    const appTheme = useContext(ThemeContext);
 
     getUserData(userID).then((res) =>
         setOwner(res.first + " " + res.last)
@@ -36,12 +39,7 @@ const Profile = ({userID, isMyProfile}) => {
   return (
     <View>
       <Appbar.Header>
-        <Avatar
-          size={32}
-          rounded
-          source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-        />
-        <Text>{owner}'s Profile!</Text>
+        <Text style={{fontFamily: appTheme.fonts.funFont, fontSize: '100'}}>{owner}'s Profile!</Text>
 
 
         {isMyProfile && <Appbar.Action
