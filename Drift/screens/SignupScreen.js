@@ -100,7 +100,7 @@ const SignupScreen = ({navigation}) => {
     
       <ImageBackground source={require('./clouds.png')} style={appTheme.container}>
     
-      <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: appTheme.colors.white}}>Thrift with</Text>    
+      <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: white}}>Thrift with</Text>    
       <Text variant="displayLarge" style={{ fontFamily: appTheme.logo.font, color: appTheme.logo.color}}
       >Drift</Text>   
    
