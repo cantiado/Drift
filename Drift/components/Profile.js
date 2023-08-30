@@ -3,7 +3,7 @@ import { View, FlatList, Text, Dimensions, Button } from "react-native";
 import { getManyItemData, getUserData } from "../firebase/database";
 import ThemeContext from "../assets/theme";
 import React, { useContext, useEffect, useState } from "react";
-import { Divider } from "react-native-paper";
+import { Divider, Appbar } from "react-native-paper";
 import { logOut } from "../firebase/authentication";
 
 const screenWidth = Dimensions.get("window").width;
@@ -57,18 +57,20 @@ const Profile = ({ userID, isMyProfile }) => {
         paddingBottom: "30%",
       },
     ]}>
-      {isMyProfile && <Button
-          onPress={handleLogOut}
-          title="Sign out"
-          textColor= {appTheme.colors.darkBlue}
-          style={{position:'absolute', right: '0', top: '0', backgroundColor: 'transparent'}}
-        /> 
-      }
-        <Text variant="displaySmall" style={{fontFamily: appTheme.fonts.funFont, color: appTheme.colors.brown, margin: '10'}}>
+      {isMyProfile && 
+      
+      <Appbar.Header>
+      <Appbar.Action 
+        icon={(props) => <Text style={{ color: appTheme.colors.darkBlue }}>Sign out</Text>}  
+        onPress={handleLogOut} 
+      />
+    </Appbar.Header>}
+
+        <Text variant="displayLarge" style={{fontFamily: appTheme.fonts.funFont, color: appTheme.colors.brown, margin: '10'}}>
           {owner}'s Profile
         </Text>
 
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
         <Button
           textColor="white"
           style={{borderRadius: '25', backgroundColor: appTheme.colors.darkBlue, width: "30%" }}
