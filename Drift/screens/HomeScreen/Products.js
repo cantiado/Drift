@@ -10,25 +10,6 @@ const cardWidth = screenWidth / 2 - 20;
 const Products = ({ query, navigation }) => {
   const renderProduct = ({ item }) => (
     <ProductCard item={item} cardWidth={cardWidth}/>
-    //<TouchableOpacity
-    // style={{ width: cardWidth}}
-    //   onPress={() => {
-    //     navigation.navigate("Product", { item });
-    //   }}
-    // >
-    //   <Card elevation={0}>
-    //     <Card.Content>
-    //       <Image
-    //         source={{
-    //           uri: item.images[0],
-    //         }}
-    //         style={{ width: "100%", height: 100 }}
-    //         resizeMode="cover"
-    //       />
-    //       <Text>{`Size: ${item.size} Price ${item.price}`}</Text>
-    //     </Card.Content>
-    //   </Card>
-    // </TouchableOpacity>
   );
 
   //fetchProductData
