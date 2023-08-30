@@ -1,20 +1,21 @@
 import * as React from "react";
 import { View, FlatList, Image, Dimensions} from "react-native";
-import { IconButton,Card, Title} from "react-native-paper";
+import {Card, Title} from "react-native-paper";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { FlatGrid } from 'react-native-super-grid';
 
 const categories = ["Tops", "Bottoms", "Dresses", "Suits", "Footwear", "Accessories", "Sleepwear", "Underwear", "Swimwear", "Costume", "Coats & Jackets",  "Jumpsuits & Rompers",]
 
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = screenWidth / 2 - 12; 
+const screenHeight = Dimensions.get('window').height;
+const cardWidth = screenWidth / 2 - 20; 
+const cardHeight = screenHeight / 6 - 200; 
 
 const Categories = ({setSearchQuery}) => {
   
     const renderCategory = ({ item }) => (
         <TouchableOpacity onPress={() => setSearchQuery(item)}
-        style={{ width: '50%', padding: 4 }}>
-            <Card style={{ margin: 8 }}>
+        style={{ width: cardWidth, height: cardHeight, padding: 5}}>
+            <Card>
                 <Card.Content>
                 <Title>{item}</Title>
                 </Card.Content>
@@ -29,7 +30,6 @@ const Categories = ({setSearchQuery}) => {
           renderItem={renderCategory}
           numColumns={2} // Number of columns you want in the grid
           keyExtractor={(categoryName) => categoryName}
-          contentContainerStyle={{ padding: 8 }}
         />
         </View>
     );
