@@ -3,7 +3,7 @@ import  { useContext } from 'react';
 import { View, ImageBackground} from 'react-native';
 import { Text, TextInput, Button, DefaultTheme  } from 'react-native-paper';
 import {logInUser} from "../firebase/authentication";
-import ThemeContext from '../assets/Theme';
+import ThemeContext from '../assets/theme';
 
 const theme = {
   ...DefaultTheme,
