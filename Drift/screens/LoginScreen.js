@@ -105,6 +105,7 @@ const LoginScreen = ({navigation}) => {
       {/* NEED TO REMOVE ONCE PAGES ARE DONE */}
       <Button
         mode="elevated"
+        style={{backgroundColor: appTheme.colors.yellow, color: 'white'}}
         onPress={()=> {
           navigation.navigate("DriftNavigation");
           }
