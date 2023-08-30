@@ -4,7 +4,7 @@ import { Appbar,Text, Button, TextInput, IconButton, MD3Colors, HelperText } fro
 import DropDown from "react-native-paper-dropdown";
 import { getCurrentUserUID } from "../firebase/authentication";
 import { getImagesFromLibrary } from "../firebase/filestorage"
-import { createItem, isValidPrice, isValidQuality, isValidSize, isValidType, isValidDemographic } from "../firebase/database";
+import { createItem, isValidPrice, isValidQuality, isValidSize, isValidType, isValidDemographic, financial } from "../firebase/database";
 
 const ItemUploadScreen = () => {
     //const [searchQuery, setSearchQuery] = React.useState("");
@@ -122,7 +122,7 @@ const ItemUploadScreen = () => {
 
      const handleFormSubmit = async () => {
       if (isValidFormInput()){
-        let success = await createItem(getCurrentUserUID(), itemName, itemPrice, itemDescription, ITEM_TYPE_TITLE2VAL[itemType], ITEM_QUALITY_TITLE2VAL[itemQuality], itemSize, ITEM_DEMOGRAPHIC_TITLE2VAL[itemCategory], itemImages, itemBrand);
+        let success = await createItem(getCurrentUserUID(), itemName, financial(itemPrice), itemDescription, ITEM_TYPE_TITLE2VAL[itemType], ITEM_QUALITY_TITLE2VAL[itemQuality], itemSize, ITEM_DEMOGRAPHIC_TITLE2VAL[itemCategory], itemImages, itemBrand);
         if (success){
           clearForm();
         } else{

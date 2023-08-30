@@ -1,8 +1,10 @@
 import * as React from "react";
 import { View, FlatList, Image, Text } from "react-native";
-import { IconButton, Card, Title, MD3Colors } from "react-native-paper";
+import { IconButton, Card, Title, MD3Colors, Button } from "react-native-paper";
 import { getManyItemData, getUserData } from "../firebase/database";
 import { getCurrentUserUID } from "../firebase/authentication";
+import { removeCartItem, buyItem } from "../firebase/database";
+import { useCallback } from "react";
 
 const cartItems = [
   {
@@ -31,7 +33,7 @@ const cartItems = [
 
 const CartScreen = ({ navigation }) => {
   const renderItems = ({ item }) => (
-    <Card style={{ margin: 1, padding: 0 }} mode="outlined" elevation={0}>
+    <Card style={{ margin: 1, padding: 0 }} elevation={1}>
       <Card.Content style={{ flexDirection: 'row', justifyContent: 'flex-start' }} >
         <Image
           source={{
@@ -41,27 +43,11 @@ const CartScreen = ({ navigation }) => {
           resizeMode="cover"
           //style={{ padding: 0 }}
         />
-        {/* <Text>{`Size: ${item.size} Price: $${item.price}`}</Text> */}
-        {/* <Card mode="outlined" elevation={0} style={{width: '70%'}}>
-          <Card.Content style={{flexDirection: 'column', justifyContent:'flex-start', width: "100%", paddingLeft: "5px",  paddingRight: "5px"}}>
-          <Text style={{overflow: 'hidden'}} numberOfLines={1} ellipsizeMode='tail'>{`${item.name}`}</Text>
-            <Text>{`Size: ${item.size}`}</Text>
-            <Text>{`Price: $${item.price}`}</Text>
-            
-          </Card.Content>
-          <IconButton 
-              style={{position:'relative'}}
-              icon="camera"
-              iconColor={MD3Colors.error50}
-              size={20}
-              onPress={() => console.log('Pressed')}
-            />
-        </Card> */}
-        <Card mode="outlined" elevation={0} style={{width: '70%'}}>
+        <Card elevation={0} style={{width: '70%'}}>
           <Card.Title 
             title={`${item.name}`}
             subtitle={`Size: ${item.size} Price: $${item.price}`}
-            right={() => <IconButton icon="trash" onPress={() => {}} />}
+            right={() => <IconButton icon="trash-can-outline" onPress={() => {removeCartItem(getCurrentUserUID(),item.id)}} />}
           />
         </Card>
       </Card.Content>
@@ -72,6 +58,14 @@ const CartScreen = ({ navigation }) => {
   getUserData(getCurrentUserUID())
     .then((user) => getManyItemData(user.cart, 0))
     .then((items) => setItems(items));
+
+  const totalPrice = items.reduce((accumulator, item) => accumulator + item.price, 0);
+  const checkoutAllItems = () => {
+    items.forEach(item => {
+      buyItem(item.id);
+    });
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -81,6 +75,12 @@ const CartScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 8 }}
       />
+      <Text>{`Total Price: $${totalPrice}`}</Text>
+      <Button 
+        mode="contained" 
+        onPress={() => {console.log('Checking out all items'); checkoutAllItems();}}>
+          Checkout All
+      </Button>
     </View>
   );
 };
