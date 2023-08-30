@@ -41,7 +41,6 @@ const HomeScreen = ({ navigation }) => {
       ) : (
         <Products query={searchQuery} navigation={navigation} />
       )}
-      <Image source={require('../../assets/grass.png')} style={theme.navigationBg} />
     </View>
   );
 };
