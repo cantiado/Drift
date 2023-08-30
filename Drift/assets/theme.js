@@ -12,6 +12,7 @@ const theme = {
   },
   fonts: {
     mainFont: 'RedHatDisplay',
+    funFont: 'CherryBombOne-Regular',
     regularFontSize: 24,
   },
 

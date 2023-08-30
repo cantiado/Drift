@@ -1,5 +1,5 @@
 import * as React from "react";
-import Profile from "../../components/Profile";
+import Profile from "../components/Profile";
 
 const SellerProfileScreen = ({ navigation, sellerID }) => {
   return (
