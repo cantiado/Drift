@@ -1,27 +1,25 @@
 import * as React from "react";
 import { View, FlatList, Image, Text, Button , Dimensions} from "react-native";
-import { IconButton, Card, Title } from "react-native-paper";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { getItemsByType, getItemTypeValue } from "../../firebase/database";
-import ProductCard from "../../components/productCard";
+import ProductCard from "../../components/ProductCard";
 const screenWidth = Dimensions.get('window').width;
 const cardWidth = screenWidth / 2 - 20;
 
-const Products = ({ query, navigation }) => {
-  const renderProduct = ({ item }) => (
-    <ProductCard item={item} cardWidth={cardWidth}/>
-  );
-
-  //fetchProductData
+const Products = ({ query, navigation}) => {
   const [items, setItems] = React.useState([]);
+
   getItemsByType(getItemTypeValue(query)).then((res) => setItems(res));
+
+  const renderProduct = ({ item }) => (
+    <ProductCard item={item} cardWidth={cardWidth} showInfo={true}/>
+  );
 
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         data={items}
         renderItem={renderProduct}
-        numColumns={2} // Number of columns you want in the grid
+        numColumns={2}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 8 }}
       />

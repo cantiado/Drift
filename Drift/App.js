@@ -33,6 +33,7 @@ const AuthFlow = () => {
 export default function App() {
   const [loaded] = useFonts({
     "CherryBombOne-Regular": require("./assets/fonts/CherryBombOne-Regular.ttf"),
+    "RedHatDisplay": require("./assets/fonts/RedHatDisplay-VariableFont_wght.ttf"),
   });
   if (!loaded) return null;
   return (
