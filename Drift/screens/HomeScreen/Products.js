@@ -1,8 +1,12 @@
 import * as React from "react";
-import { View, FlatList, Image, Text, Button } from "react-native";
+import { View, FlatList, Image, Text, Button, Dimensions} from "react-native";
 import { IconButton, Card, Title } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getItemsByType, getItemTypeValue } from "../../firebase/database";
+import { FlatGrid } from 'react-native-super-grid';
+
+const screenWidth = Dimensions.get('window').width;
+const cardWidth = screenWidth / 2 - 12;  // Adjusting for padding
 
 const Products = ({ query, navigation }) => {
   const renderProduct = ({ item }) => (
@@ -10,8 +14,9 @@ const Products = ({ query, navigation }) => {
       onPress={() => {
         navigation.navigate("Product", { item });
       }}
+      style={{ padding: 4 }}
     >
-      <Card style={{ width: '50%', margin: 1, padding: 0 }} elevation={0}>
+      <Card style={{padding: 0 }} elevation={0}>
         <Card.Content style={{ padding: 0 }}>
           <Image
             source={{
@@ -32,15 +37,21 @@ const Products = ({ query, navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
+      <FlatGrid
         data={items}
         renderItem={renderProduct}
-        numColumns={2} // Number of columns you want in the grid
+        itemDimension={cardWidth} // This becomes more of a maximum dimension when fixed is set to false
+        spacing={10}
+        fixed={false} 
+        itemsPerRow={2} // This ensures you have 2 items per row
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ padding: 8 }}
       />
     </View>
   );
 };
 
 export default Products;
+
+
+
+
