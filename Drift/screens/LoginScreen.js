@@ -5,17 +5,18 @@ import { Text, TextInput, Button, DefaultTheme  } from 'react-native-paper';
 import {logInUser} from "../firebase/authentication";
 import ThemeContext from '../assets/theme';
 
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#FF6A72', // Replace 'desiredColor' with your color (e.g., '#FF5733')
-    roundness: 25,
-  },
-};
 
 const LoginScreen = ({navigation}) => {
   const appTheme = useContext(ThemeContext);
+
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: appTheme.colors.yellow, 
+      roundness: 25,
+    },
+  };
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -57,7 +58,7 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <ImageBackground source={require('./login_bg.png')} style={appTheme.container}>
-      <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: appTheme.colors.white}}>Thrift with</Text>    
+      <Text variant="headlineMedium" style={{ fontFamily: appTheme.fonts.mainFont, color: 'white', fontWeight: 'bold'}}>Thrift with</Text>    
       <Text variant="displayLarge" 
       style={appTheme.logo}
       >Drift</Text>    
@@ -69,6 +70,7 @@ const LoginScreen = ({navigation}) => {
         value={email}
         onChangeText={email => setEmail(email)}
         mode="outlined"
+        outlineColor={appTheme.colors.darkRed}
         style={{width: '70%', paddingBottom:'5px' }}
         theme={theme}
       />
@@ -79,6 +81,7 @@ const LoginScreen = ({navigation}) => {
         value={password}
         onChangeText={password => setPassword(password)}
         mode="outlined"
+        outlineColor={appTheme.colors.darkRed}
         style={{width: '70%', paddingBottom:'5px' }}
         theme={theme}
       />
@@ -89,14 +92,17 @@ const LoginScreen = ({navigation}) => {
             handleLogIn();
           }
         }
-        style={{ width: '70%', marginTop:'5px' }}
+        textColor='black'
+        outlineColor={appTheme.colors.yellow}
+        style={{backgroundColor: appTheme.colors.yellow, width: '70%', marginTop:'5px' }}
         >
-        Log in
+        Login
       </Button>
       </View>
       
 
       <Button 
+        textColor='black'
         onPress={() => {
             navigation.navigate("Signup");
           }

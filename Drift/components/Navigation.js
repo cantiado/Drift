@@ -1,25 +1,27 @@
 import * as React from "react";
-import {StyleSheet} from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import {View, Text } from "react-native";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
 import UploadScreen from "../screens/ItemUploadScreen";
 import ProductScreen from "../screens/ProductScreen";
 import LoginScreen from "../screens/LoginScreen";
 import CartScreen from "../screens/CartScreen";
+import { logOut } from "../firebase/authentication";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { IconButton } from "react-native-paper";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ThemeContext from "../assets/theme";
 import MyProfileScreen from "../screens/MyProfileScreen";
+import SellerProfileScreen from "../screens/SellerProfileScreen";
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const AppNavStack = ({ navigation }) => {
-  const theme = useContext(ThemeContext);
+  const appTheme = useContext(ThemeContext);
   return (
     <PaperProvider>
       <Stack.Navigator initialRouteName="HomeTabs">
@@ -46,9 +48,10 @@ const AppNavStack = ({ navigation }) => {
         <Stack.Screen
           name="Cart"
           component={CartScreen}
-          options={{
-            headerRight: () => <IconButton icon="pen" size={20} />,
-          }}
+        />
+        <Stack.Screen
+          name="Seller"
+          component={SellerProfileScreen}
         />
         <Stack.Screen
           name="Login"
@@ -61,14 +64,20 @@ const AppNavStack = ({ navigation }) => {
 };
 
 const HomeTabNavStack = ({ navigation }) => {
-  const theme = useContext(ThemeContext);
+  const appTheme = useContext(ThemeContext);
+  const handleLogOut = async () => {    
+    if (await logOut()) {
+      navigation.navigate("Login");
+    }
+  };
   return (
     <Tab.Navigator
       initialRouteName="Home"
       shifting={true}
       sceneAnimationEnabled={true}
+      activeBackgroundColor={appTheme.colors.brown}
       barStyle={{
-        backgroundColor: theme.colors.green,
+        backgroundColor: appTheme.colors.green,
         position: "absolute",
         borderTopWidth: 0,
         overflow: "hidden",
@@ -83,8 +92,8 @@ const HomeTabNavStack = ({ navigation }) => {
           tabBarIcon: () => (
             <Icon
               name="home"
-              size={theme.navigationIcons.size}
-              color={theme.colors.white}
+              size={appTheme.navigationIcons.size}
+              color={appTheme.colors.white}
             />
           ),
         }}
@@ -96,8 +105,8 @@ const HomeTabNavStack = ({ navigation }) => {
           tabBarIcon: () => (
             <Icon
               name="plus"
-              size={theme.navigationIcons.size}
-              color={theme.colors.white}
+              size={appTheme.navigationIcons.size}
+              color={appTheme.colors.white}
             />
           ),
         }}
@@ -105,28 +114,36 @@ const HomeTabNavStack = ({ navigation }) => {
       <Tab.Screen
         name="Saved"
         component={SavedScreen}
-        options={{
+        options={({ navigation }) => ({
           tabBarIcon: () => (
             <Icon
               name="star"
-              size={theme.navigationIcons.size}
-              color={theme.colors.white}
+              size={appTheme.navigationIcons.size}
+              color={appTheme.colors.white}
             />
           ),
-        }}
+        })}
       />
+
       <Tab.Screen
         name="Profile"
         component={MyProfileScreen}
-        options={{
+        options={({ navigation }) => ({
           tabBarIcon: () => (
             <Icon
               name="user"
-              size={theme.navigationIcons.size}
-              color={theme.colors.white}
+              size={appTheme.navigationIcons.size}
+              color={appTheme.colors.white}
             />
           ),
-        }}
+          headerRight: () => (
+            <Button
+          onPress={handleLogOut}
+          title="Sign out"
+          color= {appTheme.colors.darkBlue}
+        /> 
+          )
+        })}
       />
     </Tab.Navigator>
   );

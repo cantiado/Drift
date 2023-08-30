@@ -1,4 +1,5 @@
 import * as React from "react";
+import  { useContext } from 'react';
 import { View } from "react-native";
 import { Button, Card, Text, Divider } from "react-native-paper";
 import {
@@ -12,7 +13,7 @@ import {
   removeSavedItem,
 } from "../firebase/database";
 import { getCurrentUserUID } from "../firebase/authentication";
-
+import ThemeContext from '../assets/theme';
 
 // const productItem = {
 //   id: "1", user: "user5090", title: "pants",
@@ -33,6 +34,16 @@ const productInfo = [
 ];
 
 const ProductScreen = ({ navigation, route }) => {
+  const appTheme = useContext(ThemeContext);
+
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      roundness: 25,
+    },
+  };
+
   const productItem = route.params.item;
   const [owner, setOwner] = React.useState("");
   const [isItemSaved, setIsItemSaved] = React.useState(null);
@@ -89,39 +100,37 @@ const ProductScreen = ({ navigation, route }) => {
           <Button
             style={{ backgroundColor: "blue" }}
             onPress={() =>
-              navigation.navigate("SellerProfileScreen", productItem.owner)
+              navigation.navigate("Seller", productItem.owner)
             }
           >
             More from {owner}
           </Button>
 
           { isItemSaved === null ? null : (isItemSaved ? <Button
-            style={{ backgroundColor: "purple" }}
+            style={{ backgroundColor: appTheme.colors.yellow }}
+            outlineColor={appTheme.colors.darkRed}
             onPress={handleRemoveSaveItem}
           >
             Unsave
           </Button> : <Button
-            style={{ backgroundColor: "purple" }}
+            style={{ backgroundColor: 'white' }}
+            outlineColor={appTheme.colors.yellow}
             onPress={handleAddSaveItem}
           >
             Save
           </Button>) 
 
           }
-
-          <Button
-            style={{ backgroundColor: "purple" }}
-            onPress={handleAddSaveItem}
-          >
-            Save
-          </Button>
           {productItem.sold ? (
-            <Button style={{ backgroundColor: "black" }} disabled="true">
+            <Button style={{ backgroundColor: appTheme.colors.red }}
+              outlineColor={appTheme.colors.red}
+              disabled="true">
               Sold
             </Button>
           ) : (
             <Button
               style={{ backgroundColor: "white" }}
+              outlineColor={appTheme.colors.red}
               onPress={handleAddCartItem}
             >
               Add to cart

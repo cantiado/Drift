@@ -9,6 +9,10 @@ const theme = {
     lightBlue: "#9EF5FF",
     green: "#BAEBAC",
     white: 'white',
+    darkRed: '#FF6A72',
+    gray: '#A1D2CF',
+    lightYellow: '#FFF7E1',
+    brown: '#342705'
   },
   fonts: {
     mainFont: 'RedHatDisplay',
@@ -19,7 +23,7 @@ const theme = {
   logo: {
     fontFamily: 'CherryBombOne-Regular',
     color: 'white',
-    fontSize: 70,
+    fontSize: 100,
     textShadowColor: '#A1D2CF',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10
@@ -40,7 +44,8 @@ const theme = {
     flex: 1,
     backgroundColor: '#9EF5FF',
     resizeMode: "cover",
-    paddingVertical: '30%', 
+    paddingTop: '20%', 
+    paddingBottom: '30%', 
     justifyContent: 'center',
     alignItems: 'center', 
   },
