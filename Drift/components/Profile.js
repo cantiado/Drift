@@ -74,8 +74,7 @@ const Profile = ({ userID, isMyProfile }) => {
           mode="contained"
           textColor="white"
           onPress={handleLogOut}
-          outlineColor={appTheme.colors.darkBlue}
-          style={{backgroundColor: "white", marginTop: '5%' }}
+          style={{backgroundColor: appTheme.colors.darkBlue, marginTop: '5%' }}
         >
           Sign out
         </Button>
@@ -84,7 +83,7 @@ const Profile = ({ userID, isMyProfile }) => {
           mode="contained"
           textColor="white"
           style={{
-            backgroundColor: appTheme.colors.darkBlue,
+            backgroundColor: appTheme.colors.darkBlue, marginTop: '5%'
           }}
           title="Follow"
           onPress={() => {}}
