@@ -257,6 +257,19 @@ export async function removeSavedItem(user, item) {
   return true;
 }
 
+/**Checks if an item is in a user's saved items.
+ *
+ * @param {string} user User ID
+ * @param {string} item Item ID
+ * @returns True if the item is in the user's saved items, false if not, and null if user doesn't exist.
+ */
+export async function isSavedItem(user, item) {
+  const userRef = doc(db, "users", user);
+  const userData = await getUserData();
+  if (userData === null) return null;
+  return userData.saved.includes(item);
+}
+
 /**Add an item to a user's cart.
  *
  * @param {string} user The user's unique ID.
@@ -293,7 +306,7 @@ export async function removeCartItem(user, item) {
 }
 
 /**Marks an item as sold on the database.
- * 
+ *
  * @param {string} item The item ID.
  * @returns True on success and false otherwise.
  */
