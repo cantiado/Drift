@@ -100,7 +100,7 @@ const SignupScreen = ({navigation}) => {
     
       <ImageBackground source={require('./clouds.png')} style={appTheme.container}>
     
-      <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: white}}>Thrift with</Text>    
+      <Text variant="headlineSmall" style={{ fontFamily: appTheme.fonts.mainFont, color: 'white'}}>Thrift with</Text>    
       <Text variant="displayLarge" style={{ fontFamily: appTheme.logo.font, color: appTheme.logo.color}}
       >Drift</Text>   
    
@@ -111,6 +111,7 @@ const SignupScreen = ({navigation}) => {
         onChangeText={firstName => setfirstName(firstName)}
         mode="outlined"
         style={{width: '100%' }}
+        theme={theme}
       />
 
       <TextInput
@@ -119,6 +120,7 @@ const SignupScreen = ({navigation}) => {
         onChangeText={lastName => setlastName(lastName)}
         mode="outlined"
         style={{width: '100%' }}
+        theme={theme}
       />
 
       <TextInput
@@ -127,6 +129,7 @@ const SignupScreen = ({navigation}) => {
         onChangeText={email => setEmail(email)}
         mode="outlined"
         style={{width: '100%' }}
+        theme={theme}
       />
 
       <TextInput
@@ -136,6 +139,7 @@ const SignupScreen = ({navigation}) => {
         onChangeText={password => setPassword(password)}
         mode="outlined"
         style={{width: '100%' }}
+        theme={theme}
       />
 
       <TextInput
@@ -145,6 +149,7 @@ const SignupScreen = ({navigation}) => {
         onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
         mode="outlined"
         style={{width: '100%' }}
+        theme={theme}
       />
 
       <Button mode="elevated" 
