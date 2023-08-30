@@ -5,6 +5,7 @@ import { IconButton, Card, Title } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getManyItemData, getUserData, removeSavedItem } from "../firebase/database";
 import { getCurrentUserUID } from "../firebase/authentication";
+import ProductCard from "../components/productCard";
 
 const SavedScreen = () => {
   const renderProduct = ({ item }) => (
