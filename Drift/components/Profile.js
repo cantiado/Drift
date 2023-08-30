@@ -1,9 +1,9 @@
 import ProductCard from "./ProductCard";
-import { View, FlatList, Text, Dimensions, Button } from "react-native";
+import { View, FlatList, Text, Dimensions } from "react-native";
 import { getManyItemData, getUserData } from "../firebase/database";
 import ThemeContext from "../assets/theme";
 import React, { useContext, useEffect, useState } from "react";
-import { Divider, Appbar } from "react-native-paper";
+import { Divider, Appbar, Button } from "react-native-paper";
 import { logOut } from "../firebase/authentication";
 
 const screenWidth = Dimensions.get("window").width;
@@ -43,51 +43,61 @@ const Profile = ({ userID, isMyProfile }) => {
     <ProductCard item={item} cardWidth={cardWidth} showInfo={false} />
   );
 
-  const handleLogOut = async () => {    
+  const handleLogOut = async () => {
     if (await logOut()) {
       navigation.navigate("Login");
     }
   };
   return (
-    <View style={[
-      appTheme.container,
-      {
-        backgroundColor: appTheme.colors.lightYellow,
-        paddingTop: "10%",
-        paddingBottom: "30%",
-      },
-    ]}>
-      {isMyProfile && 
-      
-      <Appbar.Header>
-      <Appbar.Action 
-        icon={(props) => <Text style={{ color: appTheme.colors.darkBlue }}>Sign out</Text>}  
-        onPress={handleLogOut} 
-      />
-    </Appbar.Header>}
-
-        <Text variant="displayLarge" style={{fontFamily: appTheme.fonts.funFont, color: appTheme.colors.brown, margin: '10'}}>
-          {owner}'s Profile
-        </Text>
-
-      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+    <View
+      style={[
+        {
+          flex: 1,
+          backgroundColor: appTheme.colors.lightYellow,
+          paddingBottom: "30%",
+          paddingHorizontal: "10%",
+          alignContent: "center",
+          paddingTop: "10%",
+          justifyContent: "center",
+        },
+      ]}
+    >
+      <View style={{paddingHorizontal: '20%', alignContent:"center", justifyContent: "center"}}>
+      <Text
+        variant="headlineMedium"
+        style={[appTheme.title]}
+      >
+        {owner}'s profile
+      </Text>
+      {isMyProfile ? (
         <Button
+          mode="contained"
           textColor="white"
-          style={{borderRadius: '25', backgroundColor: appTheme.colors.darkBlue, width: "30%" }}
+          onPress={handleLogOut}
+          outlineColor={appTheme.colors.darkBlue}
+          style={{backgroundColor: "white", marginTop: '5%' }}
+        >
+          Sign out
+        </Button>
+      ) : (
+        <Button
+          mode="contained"
+          textColor="white"
+          style={{
+            backgroundColor: appTheme.colors.darkBlue,
+          }}
           title="Follow"
           onPress={() => {}}
         />
-      <Text variant="titleLarge"
-        style={{
-          fontFamily: appTheme.fonts.mainFont,
-          color: 'black',
-          margin: '10',
-        }}
-      >
-        Check out {owner}'s items!
-      </Text>
+      )}
       </View>
-<Divider color={appTheme.colors.brown}/>
+
+      <Divider
+        bold="true"
+        color={appTheme.colors.brown}
+        style={{marginVertical: 10}}
+        theme={{ colors: { outlineVariant: appTheme.colors.brown } }}
+      />
       <FlatList
         data={items}
         renderItem={renderProduct}

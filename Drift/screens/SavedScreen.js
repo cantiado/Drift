@@ -39,7 +39,7 @@ const SavedScreen = () => {
     <View style={[
       appTheme.container,
       {
-        backgroundColor: appTheme.colors.red,
+        backgroundColor: appTheme.colors.lightYellow,
         paddingTop: "10%",
         paddingBottom: "30%",
         justifyContent: 'center',
@@ -47,9 +47,15 @@ const SavedScreen = () => {
     flex: 1
       },
     ]}>
-      <View>
-          <Text variant="headlineLarge" style={{ fontFamily: appTheme.fonts.mainFont, color: appTheme.colors.white}}>your saved</Text>
-          <Text variant="displayLarge" style={appTheme.logo}>Drift</Text>  
+      <Divider
+        bold="true"
+        color={appTheme.colors.brown}
+        style={{marginVertical: 10}}
+        theme={{ colors: { outlineVariant: appTheme.colors.brown } }}
+      />
+      <View style={{justifyContent: 'center',
+    alignItems: 'center', paddingHorizontal: '20%'}}>
+          <Text variant="headlineMedium" style={appTheme.title}>Saved Drifts!</Text>  
         </View>   
       <Divider/>
       <FlatList
