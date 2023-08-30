@@ -2,7 +2,6 @@ import ProductCard from "./ProductCard";
 import { View, FlatList, Text, Dimensions, Button } from "react-native";
 import { getManyItemData, getUserData } from "../firebase/database";
 import ThemeContext from "../assets/theme";
-import { ScrollView } from "react-native-gesture-handler";
 import React, { useContext, useEffect, useState } from "react";
 import { Divider } from "react-native-paper";
 import { logOut } from "../firebase/authentication";
@@ -48,7 +47,7 @@ const Profile = ({ userID, isMyProfile }) => {
     if (await logOut()) {
       navigation.navigate("Login");
     }
-
+  };
   return (
     <View style={[
       appTheme.container,
