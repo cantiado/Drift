@@ -1,7 +1,7 @@
 import * as React from "react";;
 import { Avatar } from "@rneui/themed";
 import { logOut } from "../firebase/authentication";
-import ProductCard from "../../components/ProductCard";
+import ProductCard from "./ProductCard";
 import { View, FlatList, Text, Dimensions} from "react-native";
 import { getManyItemData, getUserData } from "../firebase/database";
 import { Appbar} from "react-native-paper";
