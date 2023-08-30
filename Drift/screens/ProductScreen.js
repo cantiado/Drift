@@ -7,9 +7,13 @@ import {
   getItemDemographicTitle,
   getUserData,
   addCartItem,
+  removeSavedItem,
   addSavedItem,
+  isSavedItem,
+  removeSavedItem,
 } from "../firebase/database";
 import { getCurrentUserUID } from "../firebase/authentication";
+
 
 // const productItem = {
 //   id: "1", user: "user5090", title: "pants",
@@ -32,6 +36,7 @@ const productInfo = [
 const ProductScreen = ({ navigation, route }) => {
   const productItem = route.params.item;
   const [owner, setOwner] = React.useState("");
+  const [isItemSaved, setIsItemSaved] = React.useState(null);
   getUserData(productItem.owner).then((res) =>
     setOwner(res.first + " " + res.last)
   );
@@ -44,6 +49,11 @@ const ProductScreen = ({ navigation, route }) => {
     console.log("Buy");
     addCartItem(user, productItem.id);
   };
+  const handleRemoveSaveItem = () => {
+    console.log("Remove Save");
+    removeSavedItem(user, productItem.id);
+  };
+  isSavedItem(user,productItem.id).then(res=>setIsItemSaved(res));
 
   return (
     <View>
@@ -85,6 +95,21 @@ const ProductScreen = ({ navigation, route }) => {
           >
             More from {owner}
           </Button>
+
+          { isItemSaved === null ? null : (isItemSaved ? <Button
+            style={{ backgroundColor: "purple" }}
+            onPress={handleRemoveSaveItem}
+          >
+            Unsave
+          </Button> : <Button
+            style={{ backgroundColor: "purple" }}
+            onPress={handleAddSaveItem}
+          >
+            Save
+          </Button>) 
+
+          }
+
           <Button
             style={{ backgroundColor: "purple" }}
             onPress={handleAddSaveItem}
