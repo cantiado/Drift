@@ -70,6 +70,7 @@ const LoginScreen = ({navigation}) => {
         onChangeText={email => setEmail(email)}
         mode="outlined"
         style={{width: '70%', paddingBottom:'5px' }}
+        theme={theme}
       />
 
       <TextInput
@@ -79,6 +80,7 @@ const LoginScreen = ({navigation}) => {
         onChangeText={password => setPassword(password)}
         mode="outlined"
         style={{width: '70%', paddingBottom:'5px' }}
+        theme={theme}
       />
 
       <Button 

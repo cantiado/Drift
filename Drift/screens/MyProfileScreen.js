@@ -4,7 +4,7 @@ import { getCurrentUserUID } from "../firebase/authentication";
 
 const MyProfileScreen = ({ navigation }) => {
   return (
-      <Profile userID={getCurrentUserUID()} isMyProfile={true}/>
+      <Profile navigation={navigation} userID={getCurrentUserUID()} isMyProfile={true}/>
      
   );
 };

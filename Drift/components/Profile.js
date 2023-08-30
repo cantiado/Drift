@@ -1,4 +1,4 @@
-import * as React from "react";;
+import React, { useContext } from "react";
 import { Avatar } from "@rneui/themed";
 import { logOut } from "../firebase/authentication";
 import ProductCard from "./ProductCard";
@@ -11,7 +11,7 @@ import ThemeContext from '../assets/theme';
 const screenWidth = Dimensions.get('window').width;
 const cardWidth = screenWidth / 3 - 25;
 
-const Profile = ({userID, isMyProfile}) => {
+const Profile = ({navigation, userID, isMyProfile}) => {
 
     const [owner, setOwner] = React.useState("");
     const [items, setItems] = React.useState([]);
@@ -39,7 +39,7 @@ const Profile = ({userID, isMyProfile}) => {
   return (
     <View>
       <Appbar.Header>
-        <Text style={{fontFamily: appTheme.fonts.funFont, fontSize: '100'}}>{owner}'s Profile!</Text>
+        <Text style={{fontFamily: appTheme.fonts.funFont, fontSize: 100}}>{owner}'s Profile!</Text>
 
 
         {isMyProfile && <Appbar.Action
