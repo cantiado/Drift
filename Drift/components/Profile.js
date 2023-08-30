@@ -5,6 +5,7 @@ import ThemeContext from "../assets/theme";
 import { ScrollView } from "react-native-gesture-handler";
 import React, { useContext, useEffect, useState } from "react";
 import { Divider } from "react-native-paper";
+import { logOut } from "../firebase/authentication";
 
 const screenWidth = Dimensions.get("window").width;
 const cardWidth = screenWidth / 3 - 25;
@@ -43,6 +44,11 @@ const Profile = ({ userID, isMyProfile }) => {
     <ProductCard item={item} cardWidth={cardWidth} showInfo={false} />
   );
 
+  const handleLogOut = async () => {    
+    if (await logOut()) {
+      navigation.navigate("Login");
+    }
+
   return (
     <View style={[
       appTheme.container,
@@ -52,24 +58,34 @@ const Profile = ({ userID, isMyProfile }) => {
         paddingBottom: "30%",
       },
     ]}>
-        <Text variant="headlineMedium" style={{fontFamily: appTheme.fonts.funFont, color: appTheme.colors.brown, margin: '10'}}>
+      {isMyProfile && <Button
+          onPress={handleLogOut}
+          title="Sign out"
+          textColor= {appTheme.colors.darkBlue}
+          style={{position:'absolute', right: '0', top: '0', backgroundColor: 'transparent'}}
+        /> 
+      }
+        <Text variant="displaySmall" style={{fontFamily: appTheme.fonts.funFont, color: appTheme.colors.brown, margin: '10'}}>
           {owner}'s Profile
         </Text>
-      <Text variant="titleMedium"
+
+      <View style={{flex: 1}}>
+        <Button
+          textColor="white"
+          style={{borderRadius: '25', backgroundColor: appTheme.colors.darkBlue, width: "30%" }}
+          title="Follow"
+          onPress={() => {}}
+        />
+      <Text variant="titleLarge"
         style={{
           fontFamily: appTheme.fonts.mainFont,
           color: 'black',
           margin: '10',
         }}
       >
-        <Button
-          textColor="white"
-          style={{ backgroundColor: appTheme.colors.darkBlue, width: "30%" }}
-          title="Follow"
-          onPress={() => {}}
-        />
         Check out {owner}'s items!
       </Text>
+      </View>
 <Divider color={appTheme.colors.brown}/>
       <FlatList
         data={items}
