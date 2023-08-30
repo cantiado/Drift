@@ -19,7 +19,7 @@ const theme = {
   logo: {
     fontFamily: 'CherryBombOne-Regular',
     color: 'white',
-    fontSize: 50,
+    fontSize: 70,
     textShadowColor: '#A1D2CF',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10

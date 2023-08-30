@@ -152,7 +152,7 @@ const SignupScreen = ({navigation}) => {
             handleSignUp();
           }
         }
-        style={{ backgroundColor: appTheme.colors.yellow, color: white, width: '100%' }}
+        style={{ backgroundColor: appTheme.colors.yellow, color: 'white', width: '100%' }}
         >
         Sign up
        </Button>
