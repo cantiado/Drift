@@ -9,18 +9,19 @@ const cardWidth = screenWidth / 2 - 20;
 const Products = ({ query, navigation }) => {
   const [items, setItems] = React.useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getItemsByType(getItemTypeValue(query));
-        setItems(res);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  getItemsByType(getItemTypeValue(query)).then(res => setItems(res))
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await getItemsByType(getItemTypeValue(query));
+  //       setItems(res);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   const renderProduct = ({ item }) => (
     <ProductCard item={item} cardWidth={cardWidth} showInfo={true} navigation={navigation} />
   );
