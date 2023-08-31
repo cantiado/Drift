@@ -59,7 +59,7 @@ const ProductScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View>
+    <View style={{backgroundColor: appTheme.colors.yellow}}>
       <Card style={{ borderRadius: 15 }} elevation={0}>
         {/* Card Image */}
         <Card.Cover source={productItem.images[0]} />
@@ -101,7 +101,7 @@ const ProductScreen = ({ navigation, route }) => {
 
         {/* Card Actions */}
 
-        <Card.Actions>
+        <Card.Actions style={{flexDirection: 'row'}}>
           <Button
             textColor="white"
             style={{ backgroundColor: appTheme.colors.darkBlue}}
