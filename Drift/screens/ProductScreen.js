@@ -90,7 +90,8 @@ const ProductScreen = ({ navigation, route }) => {
 
         <Card.Actions>
           <Button
-            style={{ backgroundColor: "blue" }}
+            textColor="white"
+            style={{ backgroundColor: appTheme.colors.darkBlue}}
             onPress={() =>
               navigation.navigate("Seller", productItem.owner)
             }
@@ -101,6 +102,7 @@ const ProductScreen = ({ navigation, route }) => {
           { isItemSaved === null ? null : (isItemSaved ? <Button
             style={{ backgroundColor: appTheme.colors.yellow }}
             outlineColor={appTheme.colors.darkRed}
+            textColor="black"
             onPress={handleRemoveSaveItem}
           >
             Unsave
@@ -108,6 +110,7 @@ const ProductScreen = ({ navigation, route }) => {
             style={{ backgroundColor: 'white' }}
             outlineColor={appTheme.colors.yellow}
             onPress={handleAddSaveItem}
+            textColor="black"
           >
             Save
           </Button>) 
@@ -115,12 +118,14 @@ const ProductScreen = ({ navigation, route }) => {
           }
           {productItem.sold ? (
             <Button style={{ backgroundColor: appTheme.colors.red }}
+              textColor="white"
               outlineColor={appTheme.colors.red}
               disabled="true">
               Sold
             </Button>
           ) : (
             <Button
+              textColor="white"
               style={{ backgroundColor: "white" }}
               outlineColor={appTheme.colors.red}
               onPress={handleAddCartItem}
