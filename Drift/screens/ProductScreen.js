@@ -36,14 +36,6 @@ const productInfo = [
 const ProductScreen = ({ navigation, route }) => {
   const appTheme = useContext(ThemeContext);
 
-  const theme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      roundness: 25,
-    },
-  };
-
   const productItem = route.params.item;
   const [owner, setOwner] = React.useState("");
   const [isItemSaved, setIsItemSaved] = React.useState(null);

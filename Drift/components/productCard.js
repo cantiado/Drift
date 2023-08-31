@@ -3,7 +3,7 @@ import {Image, Text} from "react-native";
 import {Card } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const ProductCard = ({ item, cardWidth, showInfo }) => {
+const ProductCard = ({ item, cardWidth, showInfo, navigation }) => {
   return (
     <TouchableOpacity
       style={{ width: cardWidth }}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, FlatList, Image, Text, Button, Dimensions } from "react-native";
 import { getItemsByType, getItemTypeValue } from "../../firebase/database";
-import ProductCard from "../../components/ProductCard";
+import ProductCard from "../../components/productCard";
 import { ScrollView } from "react-native-gesture-handler";
 const screenWidth = Dimensions.get("window").width;
 const cardWidth = screenWidth / 2 - 20;
@@ -22,7 +22,7 @@ const Products = ({ query, navigation }) => {
     fetchData();
   }, []);
   const renderProduct = ({ item }) => (
-    <ProductCard item={item} cardWidth={cardWidth} showInfo={true} />
+    <ProductCard item={item} cardWidth={cardWidth} showInfo={true} navigation={navigation} />
   );
 
   return (
