@@ -36,21 +36,15 @@ const productInfo = [
 const ProductScreen = ({ navigation, route }) => {
   const appTheme = useContext(ThemeContext);
 
-  const theme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      roundness: 25,
-    },
-  };
-
   const productItem = route.params.item;
+  console.log(productItem)
   const [owner, setOwner] = React.useState("");
   const [isItemSaved, setIsItemSaved] = React.useState(null);
   getUserData(productItem.owner).then((res) =>
     setOwner(res.first + " " + res.last)
   );
   const user = getCurrentUserUID();
+  isSavedItem(user,productItem.id).then(res=>setIsItemSaved(res));
   const handleAddSaveItem = () => {
     console.log("Save");
     addSavedItem(user, productItem.id);
@@ -63,7 +57,6 @@ const ProductScreen = ({ navigation, route }) => {
     console.log("Remove Save");
     removeSavedItem(user, productItem.id);
   };
-  isSavedItem(user,productItem.id).then(res=>setIsItemSaved(res));
 
   return (
     <View>
@@ -84,12 +77,24 @@ const ProductScreen = ({ navigation, route }) => {
             let displayValue = productItem[key];
 
             // Special formatting for price
-            if (info === "Price") {
-              displayValue = `$${displayValue}`;
+            switch (info) {
+              case "Price":
+                displayValue = `$${displayValue}`
+                break
+              case "Type":
+                displayValue = getItemTypeTitle(displayValue)
+                break
+              case "Demographic":
+                displayValue = getItemDemographicTitle(displayValue)
+                break
+              case "Quality":
+                displayValue = getItemQualityTitle(displayValue)
+                break
             }
+            return <Text key={key}>{displayValue}</Text>
           })}
 
-          <Divider style={{ backgroundColor: "transparent", height: 10 }} />
+          {/* <Divider style={{ backgroundColor: "transparent", height: 10 }} /> */}
           {/* <Text>{`${productItem.hashtags}`}</Text> */}
           {/* <Text>{`Color: ${productItem.color}`}</Text> */}
         </Card.Content>
@@ -134,7 +139,7 @@ const ProductScreen = ({ navigation, route }) => {
           ) : (
             <Button
               textColor="white"
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: appTheme.colors.green }}
               outlineColor={appTheme.colors.red}
               onPress={handleAddCartItem}
             >

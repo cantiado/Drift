@@ -15,9 +15,9 @@ const HomeScreen = ({ navigation }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
   const appTheme = useContext(ThemeContext);
 
-  useEffect(() => {
-    //fetch data based on searchQuery
-  }, [searchQuery]);
+  // useEffect(() => {
+  //   //fetch data based on searchQuery
+  // }, [searchQuery]);
 
   return (
     <View style={[
